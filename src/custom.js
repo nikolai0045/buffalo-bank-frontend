@@ -87,11 +87,6 @@ function initSidebar() {
     setContentHeight();
   }).parent().addClass('active');
 
-  // recompute content when resizing
-  $(window).smartresize(function () {
-    setContentHeight();
-  });
-
   setContentHeight();
 
   // fixed sidebar
