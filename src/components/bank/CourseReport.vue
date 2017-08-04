@@ -3,6 +3,13 @@
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+            <div class="x_content">
+                <div class="col-md-4 offset-md-8">
+                    <button type="button" class="btn btn-success" @click="submitReport">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
           <div class="x_title">
             <h2>Bucks <small>Award bucks for {{ report.course.name }} - {{ report.date }}</small></h2>
             <div class="clearfix"></div>
@@ -15,13 +22,12 @@
                 <th>Action</th>
               </thead>
               <tbody>
-                <tr v-for="deposit in report.deposits">
+                <tr v-for="deposit in report.deposit_set">
                   <td>{{ deposit.student.last_name }}, {{ deposit.student.first_name }}</td>
                   <td v-for="buck in deposit.buck_set">
-                    <input type="checkbox" data-toggle='toggle' data-on="$" data-off="-" data-onstyle="success" />
-                    <div class='clearfix'></div>
+                    <bootstrap-toggle v-model="buck.earned" :options="{ on: '<i class=\'fa fa-usd\'></i>', off: '<i class=\'fa fa-times\'></i>', onstyle: 'success', offstyle: 'danger' }"/>
                   </td>
-                  <td><button class='btn btn-default'>Profile</button></td>
+                  <td><button class='btn btn-info'>Profile</button></td>
                 </tr>
               </tbody>
             </table>
@@ -53,8 +59,13 @@
 </template>
 
 <script>
+import BootstrapToggle from 'vue-bootstrap-toggle'
+    
 export default {
   name: 'CourseReportComponent',
+  components: {
+    BootstrapToggle  
+  },
   created: function(){
     this.fetchGoals();
     this.fetchReport();
@@ -67,7 +78,7 @@ export default {
         start_time: null,
         end_time: null,
         completed: null,
-        deposits: {},
+        deposit_set: {},
         id: null,
       },
       goals: {}
@@ -87,9 +98,8 @@ export default {
         self.report.start_time = response.data.start_time;
         self.report.end_time = response.data.end_time;
         self.report.completed = response.data.completed;
-        self.report.deposits = response.data.deposit_set;
+        self.report.deposit_set = response.data.deposit_set;
         self.report.id = response.data.id;
-        console.log(response.data);
       });
     },
     fetchGoals: function(){
@@ -99,6 +109,14 @@ export default {
       .then(function(response){
         self.goals = response.data;
       })
+    },
+    submitReport: function(){
+        var self = this;
+        var url = "bank/course_report/save/"+self.$route.params.report_id+"/";
+        self.$http.put(url,self.report)
+        .then(function(response){
+           console.log(response); 
+        });
     }
   }
 }
