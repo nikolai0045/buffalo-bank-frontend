@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <div class="x_panel">
+        <div class="x_panel" id='bucks-panel'>
           <div class="x_title">
             <h2>Bucks <small>Award bucks for {{ report.course.name }} - {{ report.date }}</small></h2>
             <div class="clearfix"></div>
@@ -34,7 +34,7 @@
           </div>
           <div class="clearfix"></div>
         </div>
-        <div class="x_panel">
+        <div class="x_panel" id='check-and-connect-panel'>
           <div class="x_title">
             <h2>Check and Connect <small>Record scores for check and connect students</small></h2>
             <div class="clearfix"></div>
@@ -44,12 +44,26 @@
           </div>
           <div class="clearfix"></div>
         </div>
-        <div class="x_panel">
+        <div class="x_panel" id='pass-panel'>
           <div class="x_title">
             <h2>PASS <small>Record scores for check and connect students</small></h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
+            <table class='table table-striped'>
+              <thead>
+                <th>Student</th>
+                <th>Goal</th>
+                <th>Score</th>
+              </thead>
+              <tbody>
+                <tr v-for="r in report.ttworeport_set">
+                  <td>{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
+                  <td>{{r.goal.goal}}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -60,11 +74,11 @@
 
 <script>
 import BootstrapToggle from 'vue-bootstrap-toggle'
-    
+
 export default {
   name: 'CourseReportComponent',
   components: {
-    BootstrapToggle  
+    BootstrapToggle
   },
   created: function(){
     this.fetchGoals();
@@ -79,6 +93,8 @@ export default {
         end_time: null,
         completed: null,
         deposit_set: {},
+        ttworeport_set: {},
+        tthreereport_set: {},
         id: null,
       },
       goals: {}
@@ -100,6 +116,8 @@ export default {
         self.report.completed = response.data.completed;
         self.report.deposit_set = response.data.deposit_set;
         self.report.id = response.data.id;
+        self.report.ttworeport_set = response.data.ttworeport_set;
+        self.report.tthreereport_set = response.data.tthreereport_set;
       });
     },
     fetchGoals: function(){
@@ -115,7 +133,7 @@ export default {
         var url = "bank/course_report/save/"+self.$route.params.report_id+"/";
         self.$http.put(url,self.report)
         .then(function(response){
-           console.log(response); 
+           console.log(response);
         });
     }
   }
