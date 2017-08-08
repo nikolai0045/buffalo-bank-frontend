@@ -47,6 +47,9 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
+						<div class='col-sm-4' v-for="course in statistics.bucks_by_course">
+							<pie-chart :data="{course}" :labels="['Earned','Unearned']"></pie-chart>
+						</div>
 						{{deposits}}
 						<div class="clearfix"></div>
 					</div>
@@ -102,6 +105,8 @@
 </template>
 
 <script>
+import Chart from 'chart.js'
+	
 export default {
 	name: 'StudentProfileComponent',
 	data: function(){
