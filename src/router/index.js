@@ -8,6 +8,7 @@ import ReportsPageComponent from '../components/bank/Reports.vue'
 import CoursesPageComponent from '../components/bank/Courses.vue'
 import RosterPageComponent from '../components/bank/CourseRoster.vue'
 import CourseReportComponent from '../components/bank/CourseReport.vue'
+import StudentProfileComponent from '../components/bank/StudentProfile.vue'
 import $ from 'jquery'
 
 
@@ -92,7 +93,18 @@ const router = new Router({
           components: {
             content: CourseReportComponent
           }
-        }
+        },
+		{
+			name: 'student_profile',
+			path: 'students/:student_id/',
+			meta: {
+				bodyClass: 'dashboard',
+				title: 'Buffalo Bank | Student'
+			},
+			components: {
+				content: StudentProfileComponent
+			}
+		}
       ]
     }
   ]

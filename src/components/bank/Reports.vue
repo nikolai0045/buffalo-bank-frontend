@@ -29,8 +29,8 @@
                   <td>{{ report.start_time }}</td>
                   <td>{{ report.end_time }}</td>
                   <td>
-                    <button v-if="report.completed" class="btn btn-default">Edit</button>
-                    <button v-else class="btn btn-info">View</button>
+					<router-link v-if="report.completed" class="btn btn-default" :to="{ name: 'course_report', params: { report_id: report.id }}">Edit</router-link>
+					<router-link v-else class="btn btn-info" :to="{ name: 'course_report', params: { report_id: report.id }}">View</router-link>
                   </td>
                   <td v-if="user.user_type == 'ADMIN' "> {{ report.course.teachers }}</td>
                 </tr>

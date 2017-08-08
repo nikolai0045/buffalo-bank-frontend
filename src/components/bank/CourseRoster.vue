@@ -22,7 +22,7 @@
                   <td>{{ student.last_name }}</td>
                   <td>{{ student.first_name }}</td>
                   <td>{{ student.account_balance }}</td>
-                  <td><button class='btn btn-default'>Profile</button></td>
+				  <td><router-link class="btn btn-default" :to="{name: 'student_profile', params: {student_id:student.id}}">Profile</router-link></td>
                 </tr>
               </tbody>
             </table>
