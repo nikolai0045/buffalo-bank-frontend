@@ -1,5 +1,83 @@
 <template>
   <div class="right_col" role="main">
+    <modal v-if="showEditAssignmentModal">
+      <h2 slot="header">Edit Missing Assignment</h2>
+      <div slot="body">
+        <div class="row">
+					<form>
+						<div class="form-group">
+							<label for="editAssignmentName">Name</label>
+							<input type="text" class="form-control" id="editAssignmentName" v-model="selectedAssignment.name">
+						</div>
+						<div class="form-group">
+							<label for="editAssignmentDescription">Description</label>
+							<textarea class="form-control" id="editAssignmentDescription" rows="3" v-model="selectedAssignment.description"></textarea>
+						</div>
+            <div class="form-group">
+              <h4>Missing</h4>
+              <div class="form-check" v-for="student in selectedAssignment.students">
+                <label class="form-check-label">
+                  {{student.last_name}}, {{student.first_name}}
+                  <i class='fa fa-minus-circle' style="cursor:pointer;" @click="studentsNotMissingAssignment.push(student);var index=selectedAssignment.students.indexOf(student);selectedAssignment.students.splice(index,1);"></i>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <h4>Not Missing</h4>
+              <div class="form-check" v-for="student in studentsNotMissingAssignment">
+                <label class="form-check-label">
+                  {{student.last_name}}, {{student.first_name}}
+                  <i class="fa fa-plus-circle" style="cursor:pointer;" @click="selectedAssignment.students.push(student);var index=studentsNotMissingAssignment.indexOf(student);studentsNotMissingAssignment.splice(index,1);"></i>
+                </label>
+              </div>
+            </div>
+					</form>
+				</div>
+      </div>
+      <div slot="footer">
+        <button class="btn btn-info" @click="saveEditAssignment();showEditAssignmentModal=false;">Save</button>
+        <button class="btn btn-default" @click="showEditAssignmentModal=false;selectedAssignment={};studentsNotMissingAssignment=[];fetchMissingAssignments();">Cancel</button>
+      </div>
+    </modal>
+    <modal v-if="showNewAssignmentModal">
+      <h2 slot="header">Add Missing Assignment</h2>
+      <div slot="body">
+        <div class="row">
+          <form>
+            <div class="form-group">
+							<label for="addAssignmentName">Name</label>
+							<input type="text" class="form-control" id="addAssignmentName" v-model="newAssignment.name">
+						</div>
+						<div class="form-group">
+							<label for="addAssignmentDescription">Description</label>
+							<textarea class="form-control" id="addAssignmentDescription" rows="3" v-model="newAssignment.description"></textarea>
+						</div>
+            <div class="form-group">
+              <h4>Missing</h4>
+              <div class="form-check" v-for="student in newAssignment.students">
+                <label class="form-check-label">
+                  {{student.last_name}}, {{student.first_name}}
+                  <i class='fa fa-minus-circle' style="cursor:pointer;" @click="studentList.push(student);var index=newAssignment.students.indexOf(student);newAssignment.students.splice(index,1);"></i>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <h4>Not Missing</h4>
+              <div class="form-check" v-for="student in studentList">
+                <label class="form-check-label">
+                  {{student.last_name}}, {{student.first_name}}
+                  <i class="fa fa-plus-circle" style="cursor:pointer;" @click="newAssignment.students.push(student);var index=studentList.indexOf(student);studentList.splice(index,1);"></i>
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div slot="footer">
+        <button class="btn btn-info" @click="saveNewAssignment();showNewAssignmentModal=false;">Save</button>
+        <button class="btn btn-default" @click="showNewAssignmentModal=false">Cancel</button>
+      </div>
+    </modal>
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -93,7 +171,7 @@
                   </td>
                   <td>
                       <ButtonGroup v-model="r.score">
-                        <Radio :selected-value="1" type="danger">Red</radio> 
+                        <Radio :selected-value="1" type="danger">Red</radio>
                         <Radio :selected-value="2" type="warning">Yellow</radio>
                         <Radio :selected-value="3" type="success">Green</radio>
                         <Radio :selected-value="4" type="info">Blue</radio>
@@ -104,6 +182,40 @@
             </table>
           </div>
           <div class="clearfix"></div>
+        </div>
+        <div class="x_panel" id="missing-assignments-panel">
+          <div class="x_title">
+            <div class="col-sm-10">
+              <h2>Missing Assignments</h2>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-default" @click="showNewAssignmentModal=true;populateStudentList();">Add</button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <table class="table">
+              <thead>
+                <th>Assignment</th>
+                <th>Students</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr v-for="assignment in missingAssignments">
+                  <td style="text-align:left;">{{assignment.name}}</td>
+                  <td style="text-align:left;">
+                    <ul>
+                      <li v-for="student in assignment.students">{{student.last_name}}, {{student.first_name}}</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <button class="btn btn-info" @click="selectedAssignment=assignment;fetchNonMissingStudents();showEditAssignmentModal=true;">Edit</button>
+                    <button class="btn btn-danger" @click="deleteAssignment(assignment)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -116,6 +228,7 @@ import BootstrapToggle from 'vue-bootstrap-toggle'
 import Radio from 'vue-strap/src/Radio.vue'
 import ButtonGroup from 'vue-strap/src/buttonGroup.vue'
 import StudentModal from '../helpers/StudentModal.vue'
+import BasicModalComponent from "../helpers/BasicModal.vue"
 
 export default {
 	name: 'CourseReportComponent',
@@ -123,7 +236,8 @@ export default {
 		BootstrapToggle,
 		Radio,
 		ButtonGroup,
-		StudentModal
+		StudentModal,
+    'modal': BasicModalComponent,
 	},
 	created: function(){
 		this.fetchGoals();
@@ -133,7 +247,9 @@ export default {
 		var self = this;
 		$("#studentModal").on("hidden.bs.modal", function(){
 			self.selectedStudent = null;
-		});	
+		});
+    var report = self.report;
+    self.fetchMissingAssignments();
 	},
 	data: function(){
 		return {
@@ -150,13 +266,66 @@ export default {
 			},
 			goals: {},
 			selectedStudent: {},
-			showStudentModal: false
+			showStudentModal: false,
+      missingAssignments: {},
+      selectedAssignment: {},
+      showEditAssignmentModal: false,
+      newAssignment: {
+        name: "",
+        description: "",
+        students: [],
+        course: null,
+      },
+      showNewAssignmentModal: false,
+      studentsNotMissingAssignment: {},
+      studentList: [],
 		}
 	},
 	props: {
 		user: {},
 	},
 	methods: {
+    saveNewAssignment: function(){
+      var self = this;
+      self.newAssignment.course = self.report.course.id;
+      var url = '/bank/courses/missing_work/create/';
+      self.$http.post(url,self.newAssignment)
+      .then(function(response){
+        self.fetchMissingAssignments();
+      });
+    },
+    populateStudentList: function(){
+      var self = this;
+      self.studentList = [];
+      for (var i = 0; i < self.report.deposit_set.length; i++) {
+          self.studentList.push(self.report.deposit_set[i].student);
+      }
+    },
+    deleteAssignment: function(assignment){
+      var self = this;
+      var url = '/bank/courses/missing_work/destroy/'+assignment.id+'/'
+      self.$http.delete(url)
+      .then(function(response){
+        self.fetchMissingAssignments();
+      })
+    },
+    fetchNonMissingStudents: function(){
+      var self = this;
+      self.$http.get('/bank/courses/not_missing_work/'+self.report.id+'/'+self.selectedAssignment.id+'/')
+      .then(function(response){
+        self.studentsNotMissingAssignment = response.data;
+      })
+    },
+    saveEditAssignment: function(){
+      var self = this;
+      var url = "/bank/courses/missing_work/update/"+self.selectedAssignment.id+"/";
+      self.$http.put(url,self.selectedAssignment)
+      .then(function(response){
+        self.selectedAssignment = {};
+        self.studentsNotMissingAssignment = [];
+        self.fetchMissingAssignments();
+      });
+    },
 		fetchReport: function(){
 			var self = this;
 			var url = "/bank/course_report/"+self.$route.params.report_id+"/";
@@ -181,6 +350,15 @@ export default {
 				self.goals = response.data;
 			})
 		},
+    fetchMissingAssignments: function(){
+      var self = this;
+      var url = '/bank/courses/missing_work/'+self.$route.params.report_id+'/';
+      console.log(url);
+      self.$http.get(url)
+      .then(function(response){
+        self.missingAssignments = response.data;
+      });
+    },
 		submitReport: function(){
 			var self = this;
 			var url = "bank/course_report/save/"+self.$route.params.report_id+"/";
