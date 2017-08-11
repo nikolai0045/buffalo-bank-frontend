@@ -4,19 +4,19 @@
       <div class="modal-wrapper">
         <div class="modal-container">
 
-          <div class="modal-header">
+          <div class="vue-modal-header">
             <slot name="header">
               default header
             </slot>
           </div>
 
-          <div class="modal-body">
+          <div class="vue-modal-body">
             <slot name="body">
               default body
             </slot>
           </div>
 
-          <div class="modal-footer">
+          <div class="vue-modal-footer">
             <slot name="footer">
               default footer
               <button class="modal-default-button" @click="$emit('close')">

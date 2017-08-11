@@ -5,30 +5,35 @@
       <div slot="body">
         <div class="row">
 					<form>
-						<div class="form-group">
-							<label for="editAssignmentName">Name</label>
-							<input type="text" class="form-control" id="editAssignmentName" v-model="selectedAssignment.name">
-						</div>
-						<div class="form-group">
-							<label for="editAssignmentDescription">Description</label>
-							<textarea class="form-control" id="editAssignmentDescription" rows="3" v-model="selectedAssignment.description"></textarea>
-						</div>
-            <div class="form-group">
-              <h4>Missing</h4>
-              <div class="form-check" v-for="student in selectedAssignment.students">
-                <label class="form-check-label">
-                  {{student.last_name}}, {{student.first_name}}
-                  <i class='fa fa-minus-circle' style="cursor:pointer;" @click="studentsNotMissingAssignment.push(student);var index=selectedAssignment.students.indexOf(student);selectedAssignment.students.splice(index,1);"></i>
-                </label>
-              </div>
+            <div class="col-md-6">
+  						<div class="form-group">
+  							<label for="editAssignmentName">Name</label>
+  							<input type="text" class="form-control" id="editAssignmentName" v-model="selectedAssignment.name">
+  						</div>
+  						<div class="form-group">
+  							<label for="editAssignmentDescription">Description</label>
+  							<textarea class="form-control" id="editAssignmentDescription" rows="3" v-model="selectedAssignment.description"></textarea>
+  						</div>
             </div>
-            <div class="form-group">
-              <h4>Not Missing</h4>
-              <div class="form-check" v-for="student in studentsNotMissingAssignment">
-                <label class="form-check-label">
-                  {{student.last_name}}, {{student.first_name}}
-                  <i class="fa fa-plus-circle" style="cursor:pointer;" @click="selectedAssignment.students.push(student);var index=studentsNotMissingAssignment.indexOf(student);studentsNotMissingAssignment.splice(index,1);"></i>
-                </label>
+            <div class="col-md-6">
+              <div class="form-group">
+                <h4>Missing</h4>
+                <div class="form-check" v-for="student in selectedAssignment.students">
+                  <label class="form-check-label">
+                    {{student.last_name}}, {{student.first_name}}
+                    <i class='fa fa-minus' style="cursor:pointer;" @click="studentsNotMissingAssignment.push(student);var index=selectedAssignment.students.indexOf(student);selectedAssignment.students.splice(index,1);"></i>
+                  </label>
+                </div>
+              </div>
+              <hr>
+              <div class="form-group">
+                <h4>Not Missing</h4>
+                <div class="form-check" v-for="student in studentsNotMissingAssignment">
+                  <label class="form-check-label">
+                    {{student.last_name}}, {{student.first_name}}
+                    <i class="fa fa-plus" style="cursor:pointer;" @click="selectedAssignment.students.push(student);var index=studentsNotMissingAssignment.indexOf(student);studentsNotMissingAssignment.splice(index,1);"></i>
+                  </label>
+                </div>
               </div>
             </div>
 					</form>
@@ -103,6 +108,7 @@
               <thead>
                 <th>Student</th>
                 <th v-for="goal in goals">{{ goal.goal }}</th>
+                <th>Note</th>
                 <th>Action</th>
               </thead>
               <tbody>
@@ -111,6 +117,7 @@
                   <td v-for="buck in deposit.buck_set">
                     <bootstrap-toggle v-model="buck.earned" :options="{ on: '<i class=\'fa fa-usd\'></i>', off: '<i class=\'fa fa-times\'></i>', onstyle: 'success', offstyle: 'danger' }"/>
                   </td>
+                  <td><input type="text" style="width:80%" :placeholder="'Note for '+ deposit.student.first_name + ' ' + deposit.student.last_name" v-model="deposit.note"></td>
                   <td><button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">Profile</button></td>
                 </tr>
               </tbody>
@@ -129,12 +136,13 @@
                     <th>Student</th>
                     <th>Goal</th>
                     <th>Score</th>
+                    <th>Note</th>
                 </thead>
                 <tbody>
                     <tr v-for="r in report.ttworeport_set">
-                        <td>{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
-                        <td>{{r.goal.goal}}</td>
-                        <td>
+                        <td style="width:20%;">{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
+                        <td style="width:30%;">{{r.goal.goal}}</td>
+                        <td style="width:20%;">
                             <ButtonGroup v-model="r.score">
                                 <Radio :selected-value="1">1</Radio>
                                 <Radio :selected-value="2">2</Radio>
@@ -143,6 +151,7 @@
                                 <Radio :selected-value="5">5</Radio>
                             </ButtonGroup>
                         </td>
+                        <td style="width:30%;"><input type="text" style="width:100%;" :placeholder="'Note for ' + r.goal.profile.student.first_name + ' ' + r.goal.profile.student.last_name" v-model="r.note"/></td>
                     </tr>
                 </tbody>
               </table>
@@ -160,16 +169,17 @@
                 <th>Student</th>
                 <th>Goals</th>
                 <th>Score</th>
+                <th>Note</th>
               </thead>
               <tbody>
                 <tr v-for="r in report.tthreereport_set">
-                  <td>{{r.profile.student.last_name}}, {{r.profile.student.first_name}}</td>
-                  <td>
+                  <td style="width:20%">{{r.profile.student.last_name}}, {{r.profile.student.first_name}}</td>
+                  <td style="width:30%">
                       <ul>
                           <li v-for = "goal in r.profile.tthreegoal_set">{{goal.goal}}</li>
                       </ul>
                   </td>
-                  <td>
+                  <td style="width:20%">
                       <ButtonGroup v-model="r.score">
                         <Radio :selected-value="1" type="danger">Red</radio>
                         <Radio :selected-value="2" type="warning">Yellow</radio>
@@ -177,6 +187,7 @@
                         <Radio :selected-value="4" type="info">Blue</radio>
                       </ButtonGroup>
                   </td>
+                  <td style="width:30%"><input type="text" style="width:100%;" :placeholder="'Note for '+r.profile.student.first_name+' '+r.profile.student.last_name" v-model="r.note"></td>
                 </tr>
               </tbody>
             </table>
@@ -314,7 +325,17 @@ export default {
       self.$http.get('/bank/courses/not_missing_work/'+self.report.id+'/'+self.selectedAssignment.id+'/')
       .then(function(response){
         self.studentsNotMissingAssignment = response.data;
-      })
+      });
+      var data = {
+        assignment:self.selectedAssignment,
+        missing:self.selectedAssignment.students,
+        notMissing:self.studentsNotMissingAssignment,
+      };
+      var url = 'bank/courses/missing_work_detail/'+self.report.id+'/'+self.selectedAssignment.id+'/';
+      self.$http.put(url,data)
+      .then(function(response){
+        console.log(response);
+      });
     },
     saveEditAssignment: function(){
       var self = this;
