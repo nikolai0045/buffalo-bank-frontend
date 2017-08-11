@@ -9,6 +9,7 @@ import CoursesPageComponent from '../components/bank/Courses.vue'
 import RosterPageComponent from '../components/bank/CourseRoster.vue'
 import CourseReportComponent from '../components/bank/CourseReport.vue'
 import StudentProfileComponent from '../components/bank/StudentProfile.vue'
+import MarketPlaceComponent from '../components/bank/Marketplace.vue'
 import $ from 'jquery'
 
 
@@ -94,6 +95,17 @@ const router = new Router({
             content: CourseReportComponent
           }
         },
+		 {
+		  name: 'marketplace',
+		  path:'marketplace',
+		  meta: {
+		  bodyClass: 'dashboard',
+		  title: 'Buffalo Bank | Marketplace'
+		  },
+		  components: {
+		  	content: MarketPlaceComponent
+		  }
+		 },
 		{
 			name: 'student_profile',
 			path: 'students/:student_id/',

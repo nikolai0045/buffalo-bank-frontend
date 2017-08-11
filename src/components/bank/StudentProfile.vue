@@ -173,6 +173,7 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
+<!--
 				<div v-if="missing_assignments.length > 0" class="x_panel">
 					<div class="x_title">
 						<h2>Missing Assignments <small>All outstanding past-due work for {{student.first_name}} {{student.last_name}}</small></h2>
@@ -198,6 +199,7 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
+-->
 				<div v-if="student.is_ttwo" class="x_panel">
 					<div class="x_title">
 						<h2>Check and Connect <small>Recent reports for {{student.first_name}} {{student.last_name}}</small></h2>
@@ -267,7 +269,7 @@ export default {
 			schedule: {},
 			ttwo_reports: {},
 			tthree_reports: {},
-			missing_assignments: {},
+			missing_assignments: [],
 			statistics: {},
 			behavior_goals: {},
 			selectedGoal: null,
