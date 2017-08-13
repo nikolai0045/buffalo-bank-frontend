@@ -196,12 +196,9 @@
         </div>
         <div class="x_panel" id="missing-assignments-panel">
           <div class="x_title">
-            <div class="col-sm-10">
-              <h2>Missing Assignments</h2>
-            </div>
-            <div class="col-sm-2">
-              <button class="btn btn-default" @click="showNewAssignmentModal=true;populateStudentList();">Add</button>
-            </div>
+			<h2>Missing Assignments
+				<i class="fa fa-plus-circle" style="cursor:pointer;" @click="showNewAssignmentModal=true;populateStudentList();"></i>
+			</h2>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -220,8 +217,12 @@
                     </ul>
                   </td>
                   <td>
-                    <button class="btn btn-info" @click="selectedAssignment=assignment;fetchNonMissingStudents();showEditAssignmentModal=true;">Edit</button>
-                    <button class="btn btn-danger" @click="deleteAssignment(assignment)">Delete</button>
+					<div class="col-xs-3">
+						<i class="fa fa-pencil fa-lg" style="cursor:pointer;" @click="selectedAssignment=assignment;fetchNonMissingStudents();showEditAssignmentModal=true;"></i>
+					</div>
+					<div class="col-xs-9">
+						<i class="fa fa-trash fa-lg" style="cursor:pointer;" @click="deleteAssignment(assignment)"></i>
+					</div>
                   </td>
                 </tr>
               </tbody>
@@ -326,25 +327,22 @@ export default {
       .then(function(response){
         self.studentsNotMissingAssignment = response.data;
       });
+    },
+    saveEditAssignment: function(){
+      var self = this;
+      var url = "/bank/courses/missing_work/update/"+self.selectedAssignment.id+"/";
       var data = {
-        assignment:self.selectedAssignment,
+        assignment:self.selectedAssignment.id,
         missing:self.selectedAssignment.students,
         notMissing:self.studentsNotMissingAssignment,
       };
       var url = 'bank/courses/missing_work_detail/'+self.report.id+'/'+self.selectedAssignment.id+'/';
       self.$http.put(url,data)
       .then(function(response){
-        console.log(response);
-      });
-    },
-    saveEditAssignment: function(){
-      var self = this;
-      var url = "/bank/courses/missing_work/update/"+self.selectedAssignment.id+"/";
-      self.$http.put(url,self.selectedAssignment)
-      .then(function(response){
         self.selectedAssignment = {};
         self.studentsNotMissingAssignment = [];
-        self.fetchMissingAssignments();
+        self.fetchMissingAssignments();		  
+        console.log(response);
       });
     },
 		fetchReport: function(){
