@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './index.js'
 import buffalo_bank_settings from './settings.js'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
@@ -12,8 +12,8 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.use(VueCookie)
 
-new Vue({
-  el: '#app',
+const vueExport = new Vue({
+  render: h => h(App),
   router,
   created: function() {
     var self = this;
@@ -66,3 +66,9 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+export default context => {
+  return Promise.resolve(
+    vueExport
+  );
+}
