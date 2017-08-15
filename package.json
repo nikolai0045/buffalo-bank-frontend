@@ -5,14 +5,17 @@
   "author": "nikolai0045 <tanner.ball@campusoutreach.org>",
   "private": true,
   "scripts": {
+    "start": "node src/server.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "heroku-postbuild": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.6.0",
     "jquery": "^3.2.1",
     "jquery-smartresize": "^2.0.0",
+    "node-static": "^0.7.9",
     "vue": "^2.4.2",
     "vue-bootstrap-toggle": "^1.1.1",
     "vue-chartjs": "^2.8.1",
