@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="/" />
+
+    <title>Buffalo Bank</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="src/css/custom.css" rel="stylesheet">
+    <link href="src/css/styles.css" rel="stylesheet">
+    <link href="src/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="src/css/template_custom.css" rel="stylesheet">
+    <link href="src/vendor/jquery-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- JQuery -->
+  	<!-- <script src='node_modules/jquery/dist/jquery.min.js'></script> -->
+    <!-- Bootstrap -->
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<!-- Moment -->
+	<script type="text/javascript" src="src/vendor/moment/moment.min.js"></script>
+    <!-- Custom -->
+    <script src='src/custom.js'></script>
+    <!-- bootstrap-daterangepicker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+  </head>
+  <body class='nav-md'>
+    <!--vue-ssr-outlet-->
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+  <script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+      container: 'body'
+    });
+  });
+  </script>
+  </body>
+
+</html>

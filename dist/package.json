@@ -1,0 +1,10 @@
+{
+  "name":"buffalo_bank_web",
+  "version":"1.0.0",
+  "description":"Frontend for Buffalo Bank",
+  "author":"Tanner Ball",
+  "private":true,
+  "scripts":{
+    "postinstall":"npm install express"
+  }
+}
