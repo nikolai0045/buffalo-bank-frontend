@@ -5,7 +5,7 @@ import axios from 'axios'
 import VueCookie from 'vue-cookie'
 
 const BANK_SETTINGS = {
-  api_url:'http://tannerball.pythonanywhere.com',
+  api_url:'http://api.buffalo-bank.com',
 }
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
