@@ -20,7 +20,7 @@ new Vue({
     axios.defaults.baseURL = BANK_SETTINGS.api_url;
     axios.defaults.withCredentials = true;
     axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
-    axios.defaults.headers.common['Access-Control-Allow-Origin'] = BANK_SETTINGS.api_url;
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = "http://tannerball.pythonanywhere.com";
     axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
     axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type,Access-Control-Allow-Headers,Access-Control-Allow-Credentials,Authorization,X-Requested-With,Set-Cookie';
 
