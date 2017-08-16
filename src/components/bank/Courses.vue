@@ -11,13 +11,13 @@
             <table class="table table-striped table-hover">
               <thead>
                 <th style='width: 60%'>Course Name</th>
-                <th style='width: 20%'>Section Number</th>
+                <th style='width: 20%'>Hour</th>
                 <th style='width: 20%' v-if="user.user_type == 'ADMIN' || user.user_type == 'OBSERVER'">Teacher(s)</th>
               </thead>
               <tbody>
                 <tr v-for="course in courses">
                   <td><router-link :to="{name: 'course_roster', params: {course_id: course.id}}">{{ course.name }}</router-link></td>
-                  <td>{{ course.section_number }}</td>
+                  <td>{{ course.hour }}</td>
                   <td v-if="user.user_type == 'ADMIN' || user.user_type == 'OBSERVER'">
                     <ul>
                       <li v-for="teacher in course.teachers">
