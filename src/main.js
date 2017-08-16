@@ -19,6 +19,7 @@ new Vue({
 
     axios.defaults.baseURL = BANK_SETTINGS.api_url;
     axios.defaults.withCredentials = true;
+    axios.defaults.headers.common['Origin'] = 'http://web.buffalo-bank.com';
     axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = "http://api.buffalo-bank.com";
     axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
