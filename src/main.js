@@ -22,7 +22,7 @@ new Vue({
     axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
     axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
-    axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type,Access-Control-Allow-Headers,Access-Control-Allow-Credentials,Authorization,X-Requested-With,Set-Cookie';
+    axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type,Access-Control-Allow-Origin,Access-Control-Allow-Headers,Access-Control-Allow-Credentials,Authorization,X-Requested-With,Set-Cookie';
 
     if (self.$cookie.get('user_key') != null) {
       axios.defaults.headers.common['Authorization'] = "Token " + self.$cookie.get('user_key');
