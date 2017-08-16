@@ -47,7 +47,7 @@ export default {
       var self = this;
       self.message = "";
       this.credentials.password = this.credentials.password.trim();
-      this.$http.post("/rest-auth/login/", this.credentials, {})
+      this.$http.post("/rest-auth/login/", this.credentials, {withCredentials:true})
         .then(function(response){
           console.log(response.status);
           if(response.status === 400) {
