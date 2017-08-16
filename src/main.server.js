@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './index.js'
-import buffalo_bank_settings from './settings.js'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
 
 const BANK_SETTINGS = {
-  api_url:'api.buffalo-bank.com',
+  api_url:'http://tannerball.pythonanywhere.com',
 }
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
