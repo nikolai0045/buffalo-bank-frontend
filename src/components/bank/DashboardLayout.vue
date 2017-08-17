@@ -80,6 +80,7 @@ export default {
     self.$http.get('/bank/current_user/')
     .then(function(response){
       self.setUser(response.data);
+      console.log(response.data);
     });
   },
   updated: function() {

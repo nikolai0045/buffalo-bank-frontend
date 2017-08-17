@@ -10,7 +10,7 @@
 				<table class="table table-condensed">
 					<thead>
 						<th v-for="header in chart.col_headers">{{header}}</th>
-						<th>4 and 5</th>
+						<th>3 and 4</th>
 					</thead>
 					<tbody>
 						<tr v-for="row in chart.courses">
@@ -21,10 +21,10 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td style="text-align:left;">4 and 5</td>
+							<td style="text-align:left;">3 and 4</td>
 							<td v-for="score in chart.totals.scores">{{score}}</td>
 							<td>{{chart.totals.summary}}</td>
-						</tr>	
+						</tr>
 					</tfoot>
 				</table>
 			</div>

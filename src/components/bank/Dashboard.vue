@@ -12,7 +12,7 @@
 					  <thead>
 						<tr>
 						  <th style='width: 20%'>Course</th>
-						  <th style='width: 10%'>Section</th>
+						  <th style='width: 10%'>Hour</th>
 						  <th style='width: 15%'>Start Time</th>
 						  <th style='width: 15%'>End Time</th>
 						  <th style='width: 20%'>Action</th>
@@ -22,7 +22,7 @@
 					  <tbody>
 						<tr v-for="report in reports">
 						  <td>{{ report.course.name }}</td>
-						  <td>{{ report.course.section_number }}</td>
+						  <td>{{ report.course.hour }}</td>
 						  <td>{{ report.start_time }}</td>
 						  <td>{{ report.end_time }}</td>
 						  <td>

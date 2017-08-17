@@ -107,18 +107,46 @@
             <table class='table table-striped table-hover'>
               <thead>
                 <th>Student</th>
-                <th v-for="goal in goals">{{ goal.goal }}</th>
-                <th>Note</th>
+                <th v-for="goal in goals">{{goal.goal}}</th>
+                <th v-if="report.course.hour='Mentoring'">Mentoring</th>
+                <th v-else>Note</th>
                 <th>Action</th>
               </thead>
               <tbody>
                 <tr v-for="deposit in report.deposit_set">
                   <td>{{ deposit.student.last_name }}, {{ deposit.student.first_name }}</td>
                   <td v-for="buck in deposit.buck_set">
-                    <bootstrap-toggle v-model="buck.earned" :options="{ on: '<i class=\'fa fa-usd\'></i>', off: '<i class=\'fa fa-times\'></i>', onstyle: 'success', offstyle: 'danger' }"/>
+                    <span v-if="!deposit.absent">
+                      <bootstrap-toggle v-model="buck.earned" :options="{ on: '<i class=\'fa fa-usd\'></i>', off: '<i class=\'fa fa-times\'></i>', onstyle: 'success', offstyle: 'danger' }"/>
+                    </span>
                   </td>
-                  <td><input type="text" style="width:80%" :placeholder="'Note for '+ deposit.student.first_name + ' ' + deposit.student.last_name" v-model="deposit.note"></td>
-                  <td><button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">Profile</button></td>
+                  <td v-if="report.course.hour=='Mentoring'">
+                    <ul style="list-style:none;" v-if="deposit.student.personalbehaviorgoal_set.length > 0">
+                        <li v-for="goal in deposit.student.personalbehaviorgoal_set">{{goal.name}} <i class='fa fa-times-circle' @click="deleteGoal(deposit,goal);var index=deposit.student.personalbehaviorgoal_set.indexOf(goal);deposit.student.personalbehaviorgoal_set.splice(index,1);"></i></li>
+                        <!-- <li>
+                          <div class="input-group" style="height:20px">
+                            <span class="input-group-btn">
+                              <button class="btn btn-success" @click="addGoal(deposit.student,deposit.newGoal);deposit.student.personalbehaviorgoal_set.push({name:newGoal})" type="button">Add</button>
+                            </span>
+                            <input class="form-control" v-model="deposit.newGoal" />
+                          </div>
+                        </li> -->
+                    </ul>
+                    <div v-if="deposit.student.editGoal" class="col-lg-6">
+                      <div class="input-group">
+                        <input type="text" v-model="deposit.student.editGoal.name" class="form-control" placeholder="Goal">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="button">Save</button>
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td v-else ><input type="text" style="width:80%" :placeholder="'Note for '+ deposit.student.first_name + ' ' + deposit.student.last_name" v-model="deposit.note"></td>
+                  <td>
+                    <button v-if="!deposit.absent" class="btn btn-danger" @click="deposit.absent = true">Absent</button>
+                    <button v-if="deposit.absent" class="btn btn-success" @click="deposit.absent = false">Present</button>
+                    <button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">View</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -148,7 +176,6 @@
                                 <Radio :selected-value="2">2</Radio>
                                 <Radio :selected-value="3">3</Radio>
                                 <Radio :selected-value="4">4</Radio>
-                                <Radio :selected-value="5">5</Radio>
                             </ButtonGroup>
                         </td>
                         <td style="width:30%;"><input type="text" style="width:100%;" :placeholder="'Note for ' + r.goal.profile.student.first_name + ' ' + r.goal.profile.student.last_name" v-model="r.note"/></td>
@@ -297,6 +324,26 @@ export default {
 		user: {},
 	},
 	methods: {
+    deleteGoal: function(deposit,goal){
+      var self = this;
+      self.$http.delete('/bank/student/destroy_goal/'+goal.id+'/')
+      .then(function(response){
+        console.log('deleted goal');
+      });
+    },
+    addGoal: function(student,newGoal){
+      var self = this;
+      self.$http.post('/bank/student/init_goal/',{student:student})
+      .then(function(response){
+        var goal = response.data;
+        goal.name = newGoal;
+        console.log(goal);
+        self.$http.put('/bank/student/update_goal/'+goal.id+'/',goal)
+        .then(function(response){
+          console.log('added goal');
+        });
+      })
+    },
     saveNewAssignment: function(){
       var self = this;
       self.newAssignment.course = self.report.course.id;
@@ -341,7 +388,7 @@ export default {
       .then(function(response){
         self.selectedAssignment = {};
         self.studentsNotMissingAssignment = [];
-        self.fetchMissingAssignments();		  
+        self.fetchMissingAssignments();
         console.log(response);
       });
     },
@@ -359,11 +406,14 @@ export default {
 				self.report.id = response.data.id;
 				self.report.ttworeport_set = response.data.ttworeport_set;
 				self.report.tthreereport_set = response.data.tthreereport_set;
+        for(var i=0;i<self.report.deposit_set.length;i++){
+          self.report.deposit_set[i].newGoal = ""
+        }
 			});
 		},
 		fetchGoals: function(){
 			var self = this;
-			var url = "bank/behavior_goals/active";
+			var url = "bank/behavior_goals/active/";
 			self.$http.get(url)
 			.then(function(response){
 				self.goals = response.data;

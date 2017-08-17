@@ -11,12 +11,25 @@
 				<p><b>Grade: </b>{{student.grade}}</p>
 				<p v-if="student.is_ttwo"><b>Check and Connect </b><i class="fa fa-check" aria-hidden="true"></i></p>
 				<p v-if="student.is_tthree"><b>PASS </b><i class="fa fa-check" aria-hidden="true"></i></p>
-				<div v-if="goals.length > 0">
-					<p><b>Goals <i class="fa fa-plus" @click.prevent="initGoal()"></i></b></p>
-					<ul>
+				<div v-if="mentee">
+					<p><b>Mentoring Goals <i class="fa fa-plus-circle" @click.prevent="initGoal()"></i></b></p>
+					<ul v-if="goals.length > 0">
 						<li v-for="g in goals">{{g.name}} <i class="fa fa-pencil-square-o" @click="setSelectedGoal(g);"></i></li>
 					</ul>
+					<ul v-else>
+						<li>Currently no goals</li>
+					</ul>
 				</div>
+				<div v-else>
+					<p><b>Goals</b></p>
+					<ul v-if="goals.length > 0">
+						<li v-for="g in goals">{{g.name}}</li>
+					</ul>
+					<ul v-else>
+						<li>Currently no goals</li>
+					</ul>
+				</div>
+
 			</div>
 			<div class="col-md-6">
 				<h4>Current Account Balance: <span style="font-size:25px;color:#32cd32;font-weight:bold">${{student.account_balance}}</span></h4>
@@ -82,7 +95,7 @@
 <script>
 export default {
 	name: 'StudentInfoComponent',
-	props: ['student'],
+	props: ['student','user'],
 	data: function(){
 		return {
 			goals: [],
@@ -91,7 +104,8 @@ export default {
 				student: null
 			},
 			edit: false,
-			create: false
+			create: false,
+			mentee: false,
 		}
 	},
 	created: function(){
@@ -100,7 +114,12 @@ export default {
 		self.$http.get(url)
 		.then(function(response){
 			self.goals = response.data;
-		})
+		});
+		var url = '/bank/is_mentee/'+this.student.id+'/'+this.user.id+'/';
+		self.$http.get(url)
+		.then(function(response){
+			self.mentee = response.data.mentee;
+		});
 	},
 	methods: {
 		initGoal: function(){

@@ -14,7 +14,7 @@
 					<div class="clearfix"></div>
 					<div class="row" v-if="goals.length > 0">
 						<div class="col-sm-12">
-							<h4 style="color:blue;">Behavior Goals</h4>
+							<h4 style="color:blue;">Mentoring Goals</h4>
 							<ul>
 								<li v-for="goal in goals">{{goal.name}}<span v-if="goal.description != '' && goal.description != null"> - {{goal.description}}</span></li>
 							</ul>

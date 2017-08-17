@@ -2,8 +2,8 @@
 	<div class="right_col" role="main">
 		<div class="row">
 			<div class="col-xs-12">
-				
-				<student-info v-if="student.id" :student="student"></student-info>
+
+				<student-info v-if="student.id" :student="student" :user="user"></student-info>
 				<student-schedule v-if="student.id" :student="student"></student-schedule>
 				<student-statistics v-if="student.id" :student="student"></student-statistics>
 				<deposits v-if="student.id" :student="student"></deposits>
