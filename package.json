@@ -20,6 +20,7 @@
     "vue-bootstrap-toggle": "^1.1.1",
     "vue-chartjs": "^2.8.1",
     "vue-cookie": "^1.1.4",
+    "vue-paginate": "^3.5.0",
     "vue-router": "^2.7.0",
     "vue-strap": "github:wffranco/vue-strap"
   },

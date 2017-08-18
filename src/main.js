@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
+import VuePaginate from 'vue-paginate'
 
 const BANK_SETTINGS = {
   api_url:'http://api.buffalo-bank.com/',
@@ -10,6 +11,7 @@ const BANK_SETTINGS = {
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.use(VueCookie)
+Vue.use(VuePaginate)
 
 new Vue({
   el: '#app',

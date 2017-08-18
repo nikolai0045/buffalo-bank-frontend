@@ -10,6 +10,7 @@ import RosterPageComponent from '../components/bank/CourseRoster.vue'
 import CourseReportComponent from '../components/bank/CourseReport.vue'
 import StudentProfileComponent from '../components/bank/StudentProfile.vue'
 import MarketPlaceComponent from '../components/bank/Marketplace.vue'
+import ManagePurchaseItemsComponent from '../components/bank/Marketplace/ManagePurchaseItems.vue'
 import $ from 'jquery'
 
 
@@ -106,6 +107,17 @@ const router = new Router({
 		  	content: MarketPlaceComponent
 		  }
 		 },
+     {
+       name: 'marketplace_manager',
+       path:'marketplace/manage/',
+       meta: {
+         bodyClass: 'dashboard',
+         title: 'Buffalo Bank | Manage Marketplace'
+       },
+       components: {
+         content: ManagePurchaseItemsComponent
+       }
+     },
 		{
 			name: 'student_profile',
 			path: 'students/:student_id/',

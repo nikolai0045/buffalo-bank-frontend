@@ -14,7 +14,7 @@
             <p>{{message}}</p>
           </div>
 		    	<button type='submit' class='btn btn-default'>Log In</button>
-
+          <a class="btn btn-default" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeYIOx3I1ulMeyQEvDZj3B9wahb6Q0wC8d4eOdvjVqIamhrdQ/viewform?usp=sf_link">Report an Issue</a>
 		    	<div class="clearfix"></div>
 		    	<div class="separator">
 			    	<div>

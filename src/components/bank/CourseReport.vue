@@ -108,7 +108,7 @@
               <thead>
                 <th>Student</th>
                 <th v-for="goal in goals">{{goal.goal}}</th>
-                <th v-if="report.course.hour='Mentoring'">Mentoring</th>
+                <th v-if="report.course.hour=='Mentoring'">Mentoring</th>
                 <th v-else>Note</th>
                 <th>Action</th>
               </thead>
@@ -123,15 +123,13 @@
                   <td v-if="report.course.hour=='Mentoring'">
                     <ul style="list-style:none;" v-if="deposit.student.personalbehaviorgoal_set.length > 0">
                         <li v-for="goal in deposit.student.personalbehaviorgoal_set">{{goal.name}} <i class='fa fa-times-circle' @click="deleteGoal(deposit,goal);var index=deposit.student.personalbehaviorgoal_set.indexOf(goal);deposit.student.personalbehaviorgoal_set.splice(index,1);"></i></li>
-                        <!-- <li>
-                          <div class="input-group" style="height:20px">
-                            <span class="input-group-btn">
-                              <button class="btn btn-success" @click="addGoal(deposit.student,deposit.newGoal);deposit.student.personalbehaviorgoal_set.push({name:newGoal})" type="button">Add</button>
-                            </span>
-                            <input class="form-control" v-model="deposit.newGoal" />
-                          </div>
-                        </li> -->
                     </ul>
+                    <div class="input-group" style="height:20px">
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" @click="addGoal(deposit.student,deposit.newGoal);deposit.student.personalbehaviorgoal_set.push({name:deposit.newGoal})" type="button">Add Goal</button>
+                      </span>
+                      <input class="form-control" v-model="deposit.newGoal" />
+                    </div>
                     <div v-if="deposit.student.editGoal" class="col-lg-6">
                       <div class="input-group">
                         <input type="text" v-model="deposit.student.editGoal.name" class="form-control" placeholder="Goal">
@@ -143,8 +141,8 @@
                   </td>
                   <td v-else ><input type="text" style="width:80%" :placeholder="'Note for '+ deposit.student.first_name + ' ' + deposit.student.last_name" v-model="deposit.note"></td>
                   <td>
-                    <button v-if="!deposit.absent" class="btn btn-danger" @click="deposit.absent = true">Absent</button>
-                    <button v-if="deposit.absent" class="btn btn-success" @click="deposit.absent = false">Present</button>
+                    <button v-if="!deposit.absent" class="btn btn-danger" @click="deposit.absent=true">Absent</button>
+                    <button v-if="deposit.absent" class="btn btn-success" @click="deposit.absent=false">Present</button>
                     <button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">View</button>
                   </td>
                 </tr>

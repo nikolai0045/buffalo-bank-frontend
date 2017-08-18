@@ -32,7 +32,7 @@
 					<router-link v-if="report.completed" class="btn btn-default" :to="{ name: 'course_report', params: { report_id: report.id }}">Edit</router-link>
 					<router-link v-else class="btn btn-info" :to="{ name: 'course_report', params: { report_id: report.id }}">View</router-link>
                   </td>
-                  <td v-if="user.user_type == 'ADMIN' "> {{ report.course.teachers }}</td>
+                  <td v-if="user.user_type == 'ADMIN' || user.administrator "> {{ report.course.teachers }}</td>
                 </tr>
               </tbody>
             </table>

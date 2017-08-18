@@ -19,9 +19,12 @@
                 <li :class="{'active': $route.fullPath === '/courses'}">
                   <router-link to="/courses"><i class="fa fa-graduation-cap"></i> Courses </router-link>
                 </li>
-				<!-- <li :class="{'active':$route.fullPath === '/marketplace'}">
-					<router-link to="/marketplace"><i class="fa fa-building"></i>Market</router-link>
-				</li> -->
+        				<li v-if="user.merchant" :class="{'active':$route.fullPath === '/marketplace'}">
+        					<router-link to="/marketplace"><i class="fa fa-building"></i>Market</router-link>
+        				</li>
+                <li>
+                  <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeYIOx3I1ulMeyQEvDZj3B9wahb6Q0wC8d4eOdvjVqIamhrdQ/viewform?usp=sf_link"><i class="fa fa-exclamation-triangle"></i>Report an Issue</a>
+                </li>
                 <!-- <li v-if="user.user_type == 'ADMIN' || user.user_type == 'TEACHER' || user.user_type == 'OBSERVER'" :class="{'active': $route.fullPath === '/users'}">
                   <router-link to="/"><i class="fa fa-users"></i> Users </router-link>
                 </li>
