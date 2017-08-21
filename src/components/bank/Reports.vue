@@ -19,7 +19,7 @@
                   <th style='width: 15%'>Start Time</th>
                   <th style='width: 15%'>End Time</th>
                   <th style='width: 20%'>Action</th>
-                  <th style='width: 20%' v-if="user.user_type == 'ADMIN'">Teachers</th>
+                  <th style='width: 20%' v-if="user.user_type == 'ADMIN' || user.administrator">Teachers</th>
                 </tr>
               </thead>
               <tbody>
@@ -32,7 +32,9 @@
 					<router-link v-if="report.completed" class="btn btn-default" :to="{ name: 'course_report', params: { report_id: report.id }}">Edit</router-link>
 					<router-link v-else class="btn btn-info" :to="{ name: 'course_report', params: { report_id: report.id }}">View</router-link>
                   </td>
-                  <td v-if="user.user_type == 'ADMIN' || user.administrator "> {{ report.course.teachers }}</td>
+                  <td v-if="user.user_type == 'ADMIN' || user.administrator ">
+						<p style="text-align:left;" v-for="teacher in report.course.teachers">{{teacher.first_name}} {{teacher.last_name}}</p>
+					</td>
                 </tr>
               </tbody>
             </table>
