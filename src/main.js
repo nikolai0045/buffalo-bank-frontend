@@ -6,7 +6,7 @@ import VueCookie from 'vue-cookie'
 import VuePaginate from 'vue-paginate'
 
 const BANK_SETTINGS = {
-  api_url:'http://localhost:8000/',
+  api_url:'http://web.buffalo-bank.com/',
 }
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
