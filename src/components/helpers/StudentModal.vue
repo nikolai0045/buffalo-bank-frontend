@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<router-link class="btn btn-default" :to="{name: 'student_profile', params: {student_id:student.id}}">Profile</router-link>
+					<router-link class="btn btn-default" target="_blank" :to="{name: 'student_profile', params: {student_id:student.id}}">Profile</router-link>
 					<button type="button" class="btn btn-default" @click="clearStudent" data-dismiss="modal">Close</button>
 				</div>
 			</div>

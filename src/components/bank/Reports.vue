@@ -14,27 +14,29 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th style='width: 20%'>Course</th>
-                  <th style='width: 10%'>Section</th>
-                  <th style='width: 15%'>Start Time</th>
-                  <th style='width: 15%'>End Time</th>
-                  <th style='width: 20%'>Action</th>
-                  <th style='width: 20%' v-if="user.user_type == 'ADMIN' || user.administrator">Teachers</th>
+                  <th>Course</th>
+                  <th>Hour</th>
+                  <th>Action</th>
+                  <th v-if="user.user_type == 'ADMIN' || user.administrator">Teachers</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="report in reports">
                   <td>{{ report.course.name }}</td>
-                  <td>{{ report.course.section_number }}</td>
-                  <td>{{ report.start_time }}</td>
-                  <td>{{ report.end_time }}</td>
+                  <td>{{ report.course.hour }}</td>
                   <td>
 					<router-link v-if="report.completed" class="btn btn-default" :to="{ name: 'course_report', params: { report_id: report.id }}">Edit</router-link>
 					<router-link v-else class="btn btn-info" :to="{ name: 'course_report', params: { report_id: report.id }}">View</router-link>
                   </td>
                   <td v-if="user.user_type == 'ADMIN' || user.administrator ">
 						<p style="text-align:left;" v-for="teacher in report.course.teachers">{{teacher.first_name}} {{teacher.last_name}}</p>
-					</td>
+					       </td>
+                 <td>
+                   <a @click="markInactive(report)">Course not active this term</a>
+                   <br>
+                   <a @click="removeReport(report)">I don't have this course today</a>
+                 </td>
                 </tr>
               </tbody>
             </table>
@@ -112,6 +114,22 @@ export default {
       .then(function(response){
         self.reports = response.data;
       });
+    },
+    markInactive: function(report){
+      var self = this;
+      var url = '/bank/reports/mark_inactive/';
+      self.$http.post(url,report)
+      .then(function(response){
+        self.fetchReports();
+      })
+    },
+    removeReport: function(report){
+      var self = this;
+      var url = '/bank/reports/destroy/'+report.id+'/';
+      self.$http.delete(url)
+      .then(function(response){
+        self.fetchReports();
+      })
     }
   }
 }

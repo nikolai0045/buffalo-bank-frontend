@@ -144,7 +144,7 @@
 								<tr v-for="deposit in report.deposit_set">
 									<td>{{ deposit.student.last_name }}, {{ deposit.student.first_name }}</td>
 									<td v-for="buck in deposit.buck_set">
-										<span v-if="!deposit.absent">
+										<span v-if="!deposit.absent && !deposit.iss">
 											<bootstrap-toggle v-model="buck.earned" :options="{ on: '<i class=\'fa fa-usd\'></i>', off: '<i class=\'fa fa-times\'></i>', onstyle: 'success', offstyle: 'danger' }"/>
 										</span>
 									</td>
@@ -159,8 +159,10 @@
 										<input type="text" style="width:80%" :placeholder="'Note for '+ deposit.student.first_name + ' ' + deposit.student.last_name" v-model="deposit.note">
 									</td>
 									<td>
-										<button v-if="!deposit.absent" class="btn btn-danger" @click="deposit.absent=true">Absent</button>
-										<button v-if="deposit.absent" class="btn btn-success" @click="deposit.absent=false">Present</button>
+										<button v-if="!deposit.absent" :disabled="deposit.iss" class="btn btn-danger" @click="deposit.absent=true;markAbsent(deposit.student,true);">Absent</button>
+										<button v-if="deposit.absent" :disabled="deposit.iss" class="btn btn-success" @click="deposit.absent=false;markAbsent(deposit.student,false)">Present</button>
+										<button v-if="!deposit.iss" :disabled="deposit.absent" class="btn btn-warning" @click="deposit.iss=true;markIss(deposit.student,true);">ISS</button>
+										<button v-if="deposit.iss" :disabled="deposit.absent" class="btn btn-info" @click="deposit.iss=false;markIss(deposit.student,false);">Undo</button>
 										<button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">View</button>
 									</td>
 								</tr>
@@ -183,21 +185,23 @@
 								<th>Note</th>
 							</thead>
 							<tbody>
-								<tr v-for="r in report.ttworeport_set">
-									<td style="width:20%;">{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
-									<td style="width:30%;">{{r.goal.goal}}</td>
-									<td style="width:20%;">
-										<ButtonGroup v-model="r.score">
-											<Radio :selected-value="1">1</Radio>
-											<Radio :selected-value="2">2</Radio>
-											<Radio :selected-value="3">3</Radio>
-											<Radio :selected-value="4">4</Radio>
-										</ButtonGroup>
-									</td>
-									<td style="width:30%;">
-										<input type="text" style="width:100%;" :placeholder="'Note for ' + r.goal.profile.student.first_name + ' ' + r.goal.profile.student.last_name" v-model="r.note"/>
-									</td>
-								</tr>
+								<template v-for="r in report.ttworeport_set">
+									<tr v-if="!r.absent && !r.iss">
+										<td style="width:15%;">{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
+										<td style="width:30%;">{{r.goal.goal}}</td>
+										<td style="width:25%;">
+											<ButtonGroup v-model="r.score">
+												<Radio :selected-value="1">1</Radio>
+												<Radio :selected-value="2">2</Radio>
+												<Radio :selected-value="3">3</Radio>
+												<Radio :selected-value="4">4</Radio>
+											</ButtonGroup>
+										</td>
+										<td style="width:30%;">
+											<input type="text" style="width:100%;" :placeholder="'Note for ' + r.goal.profile.student.first_name + ' ' + r.goal.profile.student.last_name" v-model="r.note"/>
+										</td>
+									</tr>
+								</template>
 							</tbody>
 						</table>
 					</div>
@@ -217,25 +221,31 @@
 								<th>Note</th>
 							</thead>
 							<tbody>
-								<tr v-for="r in report.tthreereport_set">
-									<td style="width:20%">{{r.profile.student.last_name}}, {{r.profile.student.first_name}}</td>
-									<td style="width:30%">
-										<ul>
-											<li v-for = "goal in r.profile.tthreegoal_set">{{goal.goal}}</li>
-										</ul>
-									</td>
-									<td style="width:20%">
-										<ButtonGroup v-model="r.score">
-											<Radio :selected-value="1" type="danger">Red</radio>
-											<Radio :selected-value="2" type="warning">Yellow</radio>
-											<Radio :selected-value="3" type="success">Green</radio>
-											<Radio :selected-value="4" type="info">Blue</radio>
-										</ButtonGroup>
-									</td>
-									<td style="width:30%">
-										<input type="text" style="width:100%;" :placeholder="'Note for '+r.profile.student.first_name+' '+r.profile.student.last_name" v-model="r.note">
-									</td>
-								</tr>
+								<template v-for="r in report.tthreereport_set">
+									<tr v-if="!r.iss && !r.absent">
+										<td style="width:15%">{{r.profile.student.last_name}}, {{r.profile.student.first_name}}</td>
+										<td style="width:30%">
+											<ul>
+												<li v-for = "goal in r.profile.tthreegoal_set">{{goal.goal}}</li>
+											</ul>
+										</td>
+										<td style="width:25%">
+											<ButtonGroup v-model="r.score">
+												<Radio :selected-value="1" type="danger" style="width:35px;height:35px;" :disabled="r.score==1"></radio>
+												<Radio :selected-value="2" type="warning" style="width:35px;height:35px;" :disabled="r.score==2"></radio>
+												<Radio :selected-value="3" type="success" style="width:35px;height:35px;" :disabled="r.score==3"></radio>
+												<Radio :selected-value="4" type="info" style="width:35px;height:35px;" :disabled="r.score==4"></radio>
+											</ButtonGroup>
+											<span v-if="r.score=='1'">Red</span>
+											<span v-if="r.score=='2'">Yellow</span>
+											<span v-if="r.score=='3'">Green</span>
+											<span v-if="r.score=='4'">Blue</span>
+										</td>
+										<td style="width:30%">
+											<input type="text" style="width:100%;" :placeholder="'Note for '+r.profile.student.first_name+' '+r.profile.student.last_name" v-model="r.note">
+										</td>
+									</tr>
+								</template>
 							</tbody>
 						</table>
 					</div>
@@ -318,9 +328,9 @@ export default {
 				start_time: null,
 				end_time: null,
 				completed: null,
-				deposit_set: {},
-				ttworeport_set: {},
-				tthreereport_set: {},
+				deposit_set: [],
+				ttworeport_set: [],
+				tthreereport_set: [],
 				id: null,
 			},
 			goals: {},
@@ -378,7 +388,7 @@ export default {
 			var self = this;
 			self.selectedStudentForGoal = {};
 			self.newGoal.name='';
-			self.newGoal.description='';	
+			self.newGoal.description='';
 		},
 		addNewgoal: function(){
 			var self = this;
@@ -503,6 +513,40 @@ export default {
 					self.$router.push('/reports')
 				}
 			});
+		},
+		markAbsent: function(student,absent){
+			var self = this;
+			var student_id = student.id;
+			console.log(student_id);
+			for(var i=0;i<self.report.ttworeport_set.length;i++){
+				if(self.report.ttworeport_set[i].goal.profile.student.id == student_id){
+					console.log(self.report.ttworeport_set[i]);
+					self.report.ttworeport_set[i].absent = absent;
+				}
+			}
+			for(var i=0;i<self.report.tthreereport_set.length;i++){
+				if(self.report.tthreereport_set[i].profile.student.id == student_id){
+					console.log(self.report.tthreereport_set[i]);
+					self.report.tthreereport_set[i].absent = absent;
+				}
+			}
+		},
+		markIss: function(student,iss){
+			var self = this;
+			var student_id = student.id;
+			console.log(student_id);
+			for(var i=0;i<self.report.ttworeport_set.length;i++){
+				if(self.report.ttworeport_set[i].goal.profile.student.id == student_id){
+					console.log(self.report.ttworeport_set[i]);
+					self.report.ttworeport_set[i].iss = iss;
+				}
+			}
+			for(var i=0;i<self.report.tthreereport_set.length;i++){
+				if(self.report.tthreereport_set[i].profile.student.id == student_id){
+					console.log(self.report.tthreereport_set[i]);
+					self.report.tthreereport_set[i].iss = iss;
+				}
+			}
 		}
 	}
 }
