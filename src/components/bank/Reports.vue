@@ -2,6 +2,9 @@
   <div class='right_col' role='main'>
     <div class='row'>
       <div class='col-md-12 col-sm-12 col-xs-12'>
+        <div class="alert alert-warning" role="alert">
+          <p style="color:black;"><strong>Notice</strong> Due to an influx of schedule change requests, I have uploaded a new schedule into the system. I apologize for the delay in getting reports to you this morning and for the confusion with report lists. The upload today included courses that are not active this term, so I have included the option for you to mark them inactive. If you do so, they will not show up on this screen for the rest of the term. The Buffalo Bank is ready for IC integration, which will be set up very soon and will make it so you won't have to worry about schedules on here anymore. I appreciate your patience. Thanks!</p>
+        </div>
         <div class='x_panel'>
           <div class="x_title">
             <h2>Reports <small>All of today's reports</small></h2>
