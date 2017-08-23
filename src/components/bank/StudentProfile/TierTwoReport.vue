@@ -38,9 +38,9 @@
 					</thead>
 					<tbody>
 						<tr v-for="note in notes">
-							<td>{{report.report.date}}</td>
-							<td>{{report.report.course.name}}</td>
-							<td>{{report.note}}</td>
+							<td>{{note.report.date}}</td>
+							<td>{{note.report.course.name}}</td>
+							<td>{{note.note}}</td>
 						</tr>
 					</tbody>
 				</table>
