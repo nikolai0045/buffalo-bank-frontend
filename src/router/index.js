@@ -11,6 +11,7 @@ import CourseReportComponent from '../components/bank/CourseReport.vue'
 import StudentProfileComponent from '../components/bank/StudentProfile.vue'
 import MarketPlaceComponent from '../components/bank/Marketplace.vue'
 import ManagePurchaseItemsComponent from '../components/bank/Marketplace/ManagePurchaseItems.vue'
+import MerchantComponent from '../components/bank/Marketplace/Merchant.vue'
 import StudentsComponent from '../components/bank/Students.vue'
 import $ from 'jquery'
 
@@ -116,6 +117,17 @@ const router = new Router({
 					},
 					components: {
 						content: ManagePurchaseItemsComponent
+					}
+				},
+				{
+					name: 'merchant',
+					path: 'marketplace/merchant/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Marketplace'
+					},
+					components: {
+						content: MerchantComponent
 					}
 				},
 				{

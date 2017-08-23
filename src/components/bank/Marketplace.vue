@@ -7,6 +7,7 @@
 			</div>
 			<div class="x_content">
 				<router-link class="btn btn-default" :to="{ name: 'marketplace_manager' }">Manage Items</router-link>
+				<router-link class="btn btn-default" :to="{ name: 'merchant' }">Sell Items</router-link>
 			</div>
 		</div>
 	</div>
