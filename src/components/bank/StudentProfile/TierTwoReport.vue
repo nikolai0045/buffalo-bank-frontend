@@ -28,6 +28,23 @@
 					</tfoot>
 				</table>
 			</div>
+			<div>
+				<h4>Notes</h4>
+				<table class="table table-condensed">
+					<thead>
+						<th>Date</th>
+						<th>Course</th>
+						<th>Note</th>
+					</thead>
+					<tbody>
+						<tr v-for="note in notes">
+							<td>{{report.report.date}}</td>
+							<td>{{report.report.course.name}}</td>
+							<td>{{report.note}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
