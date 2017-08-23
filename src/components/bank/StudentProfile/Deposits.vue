@@ -23,6 +23,22 @@
 					</tr>
 				</tbody>
 			</table>
+			<hr>
+			<h4>Notes</h4>
+			<table class="table table-condensed">
+				<thead>
+					<th>Date</th>
+					<th>Course</th>
+					<th>Note</th>
+				</thead>
+				<template v-for="deposit in deposits">
+						<tr v-if="deposit.note && deposit.note != ''">
+							<td>{{deposit.report.date}}</td>
+							<td>{{deposit.report.course.name}}</td>
+							<td>{{deposit.note}}</td>
+						</tr>
+				</template>
+			</table>
 			<div class="clearfix"></div>
 		</div>
 	</div>
