@@ -29,7 +29,7 @@
 						<td style="text-align:left;">Blues and Greens</td>
 						<td v-for="score in chart.totals.scores">{{score}}</td>
 						<td>{{chart.totals.summary}}</td>
-					</tr>	
+					</tr>
 				</tfoot>
 			</table>
 			<hr>
@@ -38,9 +38,14 @@
 				<thead>
 					<th>Date</th>
 					<th>Course</th>
+					<th>Note</th>
 				</thead>
 				<tbody>
-		
+					<tr v-for="report in notes">
+						<td>{{report.date}}</td>
+						<td>{{report.course.name}}</td>
+						<td>{{report.note}}</td>
+					</tr>
 				</tbody>
 			</table>
 			<div class="clearfix"></div>
