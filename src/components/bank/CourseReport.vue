@@ -83,6 +83,33 @@
 		<button class="btn btn-default" @click="showNewAssignmentModal=false">Cancel</button>
 	  </div>
 	</modal>
+		<div class="modal fade" id="newAssignmentModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-header">Add new missing assignment</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for='newAssignmentName'>Assignment</label>
+								<input id="newAssignmentName" v-model="newAssignment.name" class="form-control" placeholder="Assignment" />
+							</div>
+							<div class="form-group">
+								<label for='newAssignmentDescription'>Description</label>
+								<input id="newAssignmentDescription" v-model="newAssignment.description" class="form-control" placeholder="Description"/>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+		
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="modal fade" id="addGoalModal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -183,6 +210,7 @@
 								<th>Goal</th>
 								<th>Score</th>
 								<th>Note</th>
+								<th></th>
 							</thead>
 							<tbody>
 								<template v-for="r in report.ttworeport_set">
@@ -190,7 +218,7 @@
 										<td style="width:15%;">{{r.goal.profile.student.last_name}}, {{r.goal.profile.student.first_name}}</td>
 										<td style="width:30%;">{{r.goal.goal}}</td>
 										<td style="width:25%;">
-											<ButtonGroup v-model="r.score">
+											<ButtonGroup v-model="r.score" v-if="!r.not_applicable">
 												<Radio :selected-value="1">1</Radio>
 												<Radio :selected-value="2">2</Radio>
 												<Radio :selected-value="3">3</Radio>
@@ -199,6 +227,10 @@
 										</td>
 										<td style="width:30%;">
 											<input type="text" style="width:100%;" :placeholder="'Note for ' + r.goal.profile.student.first_name + ' ' + r.goal.profile.student.last_name" v-model="r.note"/>
+										</td>
+										<td>
+											<button v-if="!r.not_applicable" @click="r.not_applicable=true" class="btn btn-warning">Not Applicable</button>
+											<button v-if="r.not_applicable" @click="r.not_applicable=false" class="btn btn-success">Applicable</button>
 										</td>
 									</tr>
 								</template>
@@ -219,6 +251,7 @@
 								<th>Goals</th>
 								<th>Score</th>
 								<th>Note</th>
+								<th></th>
 							</thead>
 							<tbody>
 								<template v-for="r in report.tthreereport_set">
@@ -243,6 +276,10 @@
 										</td>
 										<td style="width:30%">
 											<input type="text" style="width:100%;" :placeholder="'Note for '+r.profile.student.first_name+' '+r.profile.student.last_name" v-model="r.note">
+										</td>
+										<td>
+											<button v-if="!r.not_applicable" @click="r.not_applicable=true" class="btn btn-warning">Not Applicable</button>
+											<button v-if="r.not_applicable" @click="r.not_applicable=false" class="btn btn-success">Applicable</button>
 										</td>
 									</tr>
 								</template>
@@ -357,6 +394,16 @@ export default {
 	},
 	props: {
 		user: {},
+	},
+	computed: {
+		roster: function(){
+			var self = this;
+			var students = [];
+			for (var i=0;i<self.report.deposit_set.length;i++){
+				students.push(self.report.deposit_set[i].student);
+			}
+			return students;
+		}	
 	},
 	methods: {
 		deleteGoal: function(deposit,goal){
