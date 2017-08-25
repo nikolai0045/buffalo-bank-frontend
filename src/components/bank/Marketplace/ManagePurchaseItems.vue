@@ -1,5 +1,6 @@
 <template>
 	<div class="right_col" role="main">
+		<edit-purchase-item-modal-component @updateItems="getItems()" @closeEditItemModal="showEditItemModal=false;selectedItem=null;" :show="showEditItemModal" :item="selectedItem"></edit-purchase-item-modal-component>
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="x_panel" id="purchase-items">
@@ -22,7 +23,10 @@
 									<td style="text-align:left;">{{item.description}}</td>
 									<td style="text-align:left;">${{item.current_price}}</td>
 									<td style="text-align:left;">{{item.quantity_remaining}}</td>
-									<td style="cursor:pointer;"><i @click.prevent="deleteItem(item)" class="fa fa-trash"></i></td>
+									<td>
+										<i style="cursor:pointer;" @click.prevent="deleteItem(item)" class="fa fa-trash"></i> | 
+										<i style="cursor:pointer;" @click.prevent="selectedItem=item;showEditItemModal=true" class="fa fa-pencil"></i>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -68,13 +72,19 @@
 
 
 <script>
+import EditPurchaseItemModalComponent from './ManagePurchaseItems/EditPurchaseItemModal.vue'
 export default {
 	name:"ManagePurchaseItemsComponent",
+	components: {
+		EditPurchaseItemModalComponent	
+	},
 	data: function(){
 		return {
 			purchaseItems: [],
 			itemsPerPage: 10,
 			itemIndex: 0,
+			showEditItemModal: false,
+			selectedItem: null,
 			newItem: {
 				name: "",
 				description: "",
