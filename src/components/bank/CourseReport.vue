@@ -224,8 +224,8 @@ import Radio from 'vue-strap/src/Radio.vue'
 import ButtonGroup from 'vue-strap/src/buttonGroup.vue'
 import StudentModal from '../helpers/StudentModal.vue'
 import BasicModalComponent from "../helpers/BasicModal.vue"
-import NewAssignmentModalComponent from './CourseReport/newAssignmentModal.vue'
-import EditAssignmentModalComponent from './CourseReport/editAssignmentModal.vue'
+import NewAssignmentModalComponent from './CourseReport/NewAssignmentModal.vue'
+import EditAssignmentModalComponent from './CourseReport/EditAssignmentModal.vue'
 
 export default {
 	name: 'CourseReportComponent',
