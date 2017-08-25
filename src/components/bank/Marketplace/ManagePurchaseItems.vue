@@ -5,7 +5,14 @@
 			<div class="col-xs-12">
 				<div class="x_panel" id="purchase-items">
 					<div class="x_title">
-						<h2>Items for Sale <small>Items currently for sale in the Buffalo Market</small></h2>
+						<div class="col-md-6">
+							<h2>Items for Sale <small>Items currently for sale in the Buffalo Market</small></h2>
+						</div>
+						<!-- <div class="col-md-6">
+							<div class="pull-right">
+								<input class="form-control" type="text" placeholder="Search..."/>
+							</div>
+						</div> -->
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -24,7 +31,7 @@
 									<td style="text-align:left;">${{item.current_price}}</td>
 									<td style="text-align:left;">{{item.quantity_remaining}}</td>
 									<td>
-										<i style="cursor:pointer;" @click.prevent="deleteItem(item)" class="fa fa-trash"></i> | 
+										<i style="cursor:pointer;" @click.prevent="deleteItem(item)" class="fa fa-trash"></i> |
 										<i style="cursor:pointer;" @click.prevent="selectedItem=item;showEditItemModal=true" class="fa fa-pencil"></i>
 									</td>
 								</tr>
@@ -76,7 +83,7 @@ import EditPurchaseItemModalComponent from './ManagePurchaseItems/EditPurchaseIt
 export default {
 	name:"ManagePurchaseItemsComponent",
 	components: {
-		EditPurchaseItemModalComponent	
+		EditPurchaseItemModalComponent
 	},
 	data: function(){
 		return {

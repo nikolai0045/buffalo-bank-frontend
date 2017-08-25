@@ -51,7 +51,7 @@ export default {
 			name: "",
 			description: "",
 			current_price: 0,
-			quantity_remaining: 0
+			quantity_remaining: 0,
 		}
 	},
 	mounted: function(){
@@ -82,7 +82,7 @@ export default {
 				name: this.name,
 				description: this.description,
 				current_price: this.current_price,
-				quantity_remaining: this.quantity_remaining
+				quantity_remaining: this.quantity_remaining,
 			}
 			var url = "/bank/marketplace/item/update/"+this.item.id+'/';
 			var self = this;
