@@ -75,7 +75,6 @@ export default {
 			}
 		}
 	},
-
 	methods: {
 		submit: function(){
 			var item = {
