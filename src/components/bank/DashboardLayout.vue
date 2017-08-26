@@ -17,7 +17,7 @@
 								<li :class="{'active': $route.fullPath === '/courses'}">
 									<router-link to="/courses"><i class="fa fa-graduation-cap"></i> Courses </router-link>
 								</li>
-								<li v-if="user.merchant" :class="{'active':$route.fullPath === '/marketplace'}">
+								<li :class="{'active':$route.fullPath === '/marketplace'}">
 									<router-link to="/marketplace"><i class="fa fa-building"></i>Market</router-link>
 								</li>
 <!--

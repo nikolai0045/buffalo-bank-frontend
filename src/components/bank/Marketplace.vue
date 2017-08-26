@@ -10,6 +10,19 @@
 				<router-link class="btn btn-default" :to="{ name: 'merchant' }">Sell Items</router-link>
 			</div>
 		</div>
+		<div class="col-sm-4" v-for="item in purchaseItems">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>{{item.name}}</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+						<h3>${{item.current_price}}</h3>
+						<p>{{item.description}}</p>
+						<p>{{item.quantity_remaining}} remaining</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -19,8 +32,22 @@ export default {
 	props: ['user'],
 	data: function(){
 		return {
+			purchaseItems: []
+		}
+	},
+	methods: {
+		getItems: function(){
+			var self = this;
+			var url = '/bank/marketplace/items/';
+			self.$http.get(url)
+			.then(function(response){
+				self.purchaseItems = response.data;
+			});
 
 		}
+	},
+	created: function(){
+		this.getItems();
 	}
 }
 </script>
