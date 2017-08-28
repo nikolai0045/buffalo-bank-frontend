@@ -35,12 +35,13 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<button v-if="addStudents=false" @click="addStudents = true;" class="btn btn-default">Add Students</button>
-						<div class="form-group" v-if="addStudent=True">
+						<button v-if="!addStudents" @click="addStudents = true;" class="btn btn-default">Add Students</button>
+						<div class="form-group" v-if="addStudents">
 							<div v-for="student in studentsInGrade" class="col-md-4">
-								<label>{{student.last_name}}, {{student.first_name}}</label>
-								<button class="btn btn-primary" @click="addStudentToCourse(student)">Add Student</button>
+								<button class="btn btn-primary" @click="addStudentToCourse(student)">+ {{student.last_name}}, {{student.first_name}}</button>
 							</div>
+							<div class="clearfix"></div>
+							<hr>
 							<button class="btn btn-primary" @click="addStudents=false">Done</button>
 						</div>
 					</div>
@@ -258,7 +259,6 @@ export default {
 	created: function(){
 		this.fetchGoals();
 		this.fetchReport();
-		this.fetchStudentsByGrade();
 	},
 	mounted: function(){
 		var self = this;
@@ -267,6 +267,13 @@ export default {
 		});
 		var report = self.report;
 		self.fetchMissingAssignments();
+	},
+	watch: {
+		addStudents: function(newValue){
+			if (newValue){
+				this.fetchStudentsByGrade();
+			}
+		}
 	},
 	data: function(){
 		return {
@@ -510,7 +517,7 @@ export default {
 		},
 		removeStudent: function(student){
 			var student_id = student.id;
-			var report_id = report.id;
+			var report_id = this.report.id;
 			var url = "bank/course_report/remove_student/";
 			var self = this;
 			self.$http.post(url,{student_id:student_id,report_id:report_id})
@@ -520,19 +527,23 @@ export default {
 		},
 		addStudentToCourse: function(student){
 			var student_id = student.id;
-			var report_id = report.id;
+			var report_id = this.report.id;
 			var url = "bank/course_report/add_student/";
 			var self = this;
 			self.$http.post(url,{student_id:student_id,report_id:report_id})
 			.then(function(response){
-				self.fetchreport();
+				self.fetchReport();
 			})
 		},
 		fetchStudentsByGrade: function(){
-			var grade = report.course.grade;
+			var self = this;
+			var grade = self.report.deposit_set[0].student.grade;
+			var data = {
+				grade: grade
+			};
 			var url = "bank/students/get_by_grade/";
 			var self = this;
-			self.$http.post(url,{grade:grade})
+			self.$http.post(url,data)
 			.then(function(response){
 				self.studentsInGrade = response.data;
 			})
