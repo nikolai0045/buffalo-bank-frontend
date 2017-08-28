@@ -146,18 +146,18 @@
 							<label class="col-sm-3 col-form-label">Start Time</label>
 							<div class="col-sm-3">
 										<select class="form-control" v-model="newTimeSlotStartHour" placeholder="Hour">
-											<option value=1>1</option>
-											<option value=2>2</option>
-											<option value=3>3</option>
-										<option value=4>4</option>
-										<option value=5>5</option>
-										<option value=6>6</option>
-										<option value=7>7</option>
-										<option value=8>8</option>
-										<option value=9>9</option>
-										<option value=10>10</option>
-										<option value=11>11</option>
-										<option value=0>12</option>
+											<option value="01">1</option>
+											<option value="02">2</option>
+											<option value="03">3</option>
+										<option value="04">4</option>
+										<option value="05">5</option>
+										<option value="06">6</option>
+										<option value="07">7</option>
+										<option value="08">8</option>
+										<option value="09">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="00">12</option>
 									</select>
 							</div>
 							<div class="col-sm-3">
@@ -236,18 +236,18 @@
 
 								<div class="col-md-3">
 									<select class="form-control" v-model="newTimeSlotEndHour" placeholder="Hour">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-									<option value=4>4</option>
-									<option value=5>5</option>
-									<option value=6>6</option>
-									<option value=7>7</option>
-									<option value=8>8</option>
-									<option value=9>9</option>
-									<option value=10>10</option>
-									<option value=11>11</option>
-									<option value=0>12</option>
+										<option value="01">1</option>
+										<option value="02">2</option>
+										<option value="03">3</option>
+										<option value="04">4</option>
+										<option value="05">5</option>
+										<option value="06">6</option>
+										<option value="07">7</option>
+										<option value="08">8</option>
+										<option value="09">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="00">12</option>
 									</select>
 								</div>
 								<div class="col-md-3">
@@ -413,10 +413,58 @@ export default {
 			var self = this;
 			var url = "/bank/schedule/time_slots/"
 			if (self.newTimeSlotStartMidi == 'PM'){
-				self.newTimeSlotStartHour += 12;
+				if (self.newTimeSlotStartHour == '00'){
+					self.newTimeSlotStartHour = '12';
+				} else if (self.newTimeSlotStartHour == '01'){
+					self.newTimeSlotStartHour = '13';
+				} else if (self.newTimeSlotStartHour == '02'){
+					self.newTimeSlotStartHour = '14';
+				} else if (self.newTimeSlotStartHour == '03'){
+					self.newTimeSlotStartHour = '15';
+				} else if (self.newTimeSlotStartHour == '04'){
+					self.newTimeSlotStartHour = '16';
+				} else if (self.newTimeSlotStartHour == '05'){
+					self.newTimeSlotStartHour = '17';
+				} else if (self.newTimeSlotStartHour == '06'){
+					self.newTimeSlotStartHour = '18';
+				} else if (self.newTimeSlotStartHour == '07'){
+					self.newTimeSlotStartHour = '19';
+				} else if (self.newTimeSlotStartHour == '08'){
+					self.newTimeSlotStartHour = '20';
+				} else if (self.newTimeSlotStartHour == '09'){
+					self.newTimeSlotStartHour = '21';
+				} else if (self.newTimeSlotStartHour == '10'){
+					self.newTimeSlotStartHour = '22';
+				} else if (self.newTimeSlotStartHour == '11'){
+					self.newTimeSlotStartHour = '23';
+				}
 			}
 			if (self.newTimeSlotEndMidi == 'PM'){
-				self.newTimeSlotStartHour += 12;
+				if (self.newTimeSlotEndHour == '00'){
+					self.newTimeSlotEndHour = '12';
+				} else if (self.newTimeSlotEndHour == '01'){
+					self.newTimeSlotEndHour = '13';
+				} else if (self.newTimeSlotEndHour == '02'){
+					self.newTimeSlotEndHour = '14';
+				} else if (self.newTimeSlotEndHour == '03'){
+					self.newTimeSlotEndHour = '15';
+				} else if (self.newTimeSlotEndHour == '04'){
+					self.newTimeSlotEndHour = '16';
+				} else if (self.newTimeSlotEndHour == '05'){
+					self.newTimeSlotEndHour = '17';
+				} else if (self.newTimeSlotEndHour == '06'){
+					self.newTimeSlotEndHour = '18';
+				} else if (self.newTimeSlotEndHour == '07'){
+					self.newTimeSlotEndHour = '19';
+				} else if (self.newTimeSlotEndHour == '08'){
+					self.newTimeSlotEndHour = '20';
+				} else if (self.newTimeSlotEndHour == '09'){
+					self.newTimeSlotEndHour = '21';
+				} else if (self.newTimeSlotEndHour == '10'){
+					self.newTimeSlotEndHour = '22';
+				} else if (self.newTimeSlotEndHour == '11'){
+					self.newTimeSlotEndHour = '23';
+				}
 			}
 			var startTime = self.newTimeSlotStartHour+":"+self.newTimeSlotStartMinute+":00"
 			var endTime = self.newTimeSlotEndHour+":"+self.newTimeSlotEndMinute+":00"
