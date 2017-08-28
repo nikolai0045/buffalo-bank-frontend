@@ -8,6 +8,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Assign Schedules</h2>
+						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<label for="schedule_date">Select Date</label>
@@ -17,6 +18,7 @@
 							<option v-for="schedule in schedules" :value="schedule">{{schedule.name}}</option>
 						</select>
 						<button class="btn btn-primary" @click="submit()">Save Changes</button>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
@@ -26,7 +28,7 @@
 
 <script>
 export default {
-	name: "ManageDailySchedulesComponent.vue",
+	name: "ManageDailySchedulesComponent",
 	data: function(){
 		return {
 			date: null,

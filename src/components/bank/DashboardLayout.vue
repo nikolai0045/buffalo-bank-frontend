@@ -20,6 +20,9 @@
 								<li :class="{'active':$route.fullPath === '/marketplace'}">
 									<router-link to="/marketplace"><i class="fa fa-building"></i>Market</router-link>
 								</li>
+								<li :class="{'active':$route.fullPath === '/admin'}">
+									<router-link to="/admin"><i class="fa fa-dashboard"></i>Admin</router-link>
+								</li>
 <!--
 								<li :class="{'active': $route.fullPath === '/students'}">
 									<router-link :to="{ name: 'students'}"><i class="fa fa-users"></i>Students</router-link>

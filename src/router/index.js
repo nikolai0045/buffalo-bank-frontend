@@ -13,6 +13,9 @@ import MarketPlaceComponent from '../components/bank/Marketplace.vue'
 import ManagePurchaseItemsComponent from '../components/bank/Marketplace/ManagePurchaseItems.vue'
 import MerchantComponent from '../components/bank/Marketplace/Merchant.vue'
 import StudentsComponent from '../components/bank/Students.vue'
+import AdminPanelComponent from '../components/admin/AdminPanel.vue'
+import ManageDailySchedulesComponents from '../components/admin/AdminPanel/ManageDailySchedules.vue'
+import ScheduleBuilderComponent from '../components/admin/AdminPanel/ScheduleBuilder.vue'
 import $ from 'jquery'
 
 
@@ -150,6 +153,39 @@ const router = new Router({
 					},
 					components: {
 						content: StudentsComponent
+					}
+				},
+				{
+					name: 'admin_panel',
+					path: 'admin/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Admin'
+					},
+					components: {
+						content: AdminPanelComponent
+					}
+				},
+				{
+					name: 'manage_daily_schedules',
+					path: 'admin/daily_schedules/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Daily Schedules'
+					},
+					components: {
+						content: ManageDailySchedulesComponents
+					}
+				},
+				{
+					name: 'schedule_builder',
+					path: 'admin/schedule_builder/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Schedule Builder'
+					},
+					components: {
+						content: ScheduleBuilderComponent
 					}
 				}
 			]
