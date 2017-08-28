@@ -412,7 +412,7 @@ export default {
 		saveTimeSlot: function(){
 			var self = this;
 			var url = "/bank/schedule/time_slots/"
-			if (self.newTimeSlotStartMidi == 'PM' %% self.newTimeSlotStartHour != "12"){
+			if (self.newTimeSlotStartMidi == 'PM' && self.newTimeSlotStartHour != "12"){
 				self.newTimeSlotStartHour += 12;
 			}
 			if (self.newTimeSlotEndMidi == 'PM' && self.newTimeSlotEndHour != "12"){
