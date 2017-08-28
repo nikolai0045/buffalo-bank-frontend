@@ -18,12 +18,14 @@
 				</div>
 				<div class="x_content">
 						<h3>${{item.current_price}}</h3>
+						<p><b>{{item.name}}</b></p>
 						<p>{{item.description}}</p>
 						<p>{{item.quantity_remaining}} remaining</p>
 				</div>
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		<div class="clearfix"></div>
 	</div>
 </template>
 
