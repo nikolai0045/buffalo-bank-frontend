@@ -20,7 +20,7 @@
 								<li :class="{'active':$route.fullPath === '/marketplace'}">
 									<router-link to="/marketplace"><i class="fa fa-building"></i>Market</router-link>
 								</li>
-								<li :class="{'active':$route.fullPath === '/admin'}">
+								<li v-if="user.administrator" :class="{'active':$route.fullPath === '/admin'}">
 									<router-link to="/admin"><i class="fa fa-dashboard"></i>Admin</router-link>
 								</li>
 <!--
