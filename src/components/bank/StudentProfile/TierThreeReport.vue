@@ -1,10 +1,16 @@
 <template>
 	<div class="x_panel pass_panel" v-if="loaded">
 		<div class="x_title">
-			<h2>PASS <small>Recent reports for {{student.first_name}} {{student.last_name}}</small></h2>
+			<div class="col-md-6">
+				<h2>PASS <small>Recent reports for {{student.first_name}} {{student.last_name}}</small></h2>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
+			<div class="col-md-6 pull-right">
+				<label>Select Date</label>
+				<input v-model="date" id='schedule_date' type="text" class="form-control datepicker" data-date-format="yy-mm-dd" />
+			</div>
 			<h4>Goals</h4>
 			<ul v-if="goals.length > 0">
 				<li v-for="goal in goals">{{goal.goal}}</li>
@@ -90,12 +96,46 @@ export default {
 			chart: {},
 			goals: [],
 			loaded: false,
-			notes: []
+			notes: [],
+			date: false
 		}
 	},
 	created: function(){
 		this.fetchTThreeReports();
 		this.fetchTThreeNotes();
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth()+1;
+		var day = today.getDate();
+		if (month < 10){
+			month = "0" + month;
+		}
+		if (day < 10){
+			day = "0" + date;
+		}
+		var date = year + '-' + month + '-' + day;
+		this.date = date;
+	},
+	mounted: function(){
+		var self = this;
+		$('.datepicker').daterangepicker();
+		$('.datepicker').each(function() {
+			$(this).daterangepicker(
+				{
+					locale: {
+						format: 'YYYY-MM-DD',
+					},
+					singleDatePicker: true
+				}
+			).on('apply.daterangepicker', function(ev, picker) {
+				self.date = $(this).val();
+			});
+		});
+	},
+	watch: {
+		date: function(newVal){
+			this.fetchTThreeReports();
+		}
 	},
 	methods: {
 		fetchTThreeReports: function(){
@@ -103,6 +143,9 @@ export default {
 			var url = '/bank/student/tthree_chart/';
 			var data = {
 				'student_id':self.student.id,
+			}
+			if (self.date){
+				data.date = self.date;
 			}
 			self.$http.post(url,data)
 			.then(function(response){
@@ -116,6 +159,9 @@ export default {
 			var url = '/bank/student/tthree_notes/';
 			var data = {
 				'student_id':self.student.id,
+			}
+			if(self.date){
+				data.date = self.date;
 			}
 			self.$http.post(url,data)
 			.then(function(response){
