@@ -413,10 +413,10 @@ export default {
 			var self = this;
 			var url = "/bank/schedule/time_slots/"
 			if (self.newTimeSlotStartMidi == 'PM' && self.newTimeSlotStartHour != "12"){
-				self.newTimeSlotStartHour += 12;
+				self.newTimeSlotStartHour = String(parseInt(self.newTimeSlotStartHour)+12);
 			}
 			if (self.newTimeSlotEndMidi == 'PM' && self.newTimeSlotEndHour != "12"){
-				self.newTimeSlotStartHour += 12;
+				self.newTimeSlotStartHour = String(parseInt(self.newTimeSlotEndHour)+12);
 			}
 			var startTime = self.newTimeSlotStartHour+":"+self.newTimeSlotStartMinute+":00"
 			var endTime = self.newTimeSlotEndHour+":"+self.newTimeSlotEndMinute+":00"
