@@ -10,7 +10,7 @@
 				<router-link class="btn btn-default" :to="{ name: 'merchant' }">Sell Items</router-link>
 			</div>
 		</div>
-		<div class="col-sm-4" v-for="item in purchaseItems">
+		<div class="col-sm-6" v-for="item in purchaseItems">
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>{{item.name}}</h2>
@@ -22,6 +22,7 @@
 						<p>{{item.quantity_remaining}} remaining</p>
 				</div>
 			</div>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 </template>

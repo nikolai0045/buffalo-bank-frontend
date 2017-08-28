@@ -30,6 +30,21 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
+					<div class="x_title">
+						<h2>Add Students</h2>
+					</div>
+					<div class="x_content">
+						<button v-if="addStudents=false" @click="addStudents = true;" class="btn btn-default">Add Students</button>
+						<div class="form-group" v-if="addStudent=True">
+							<div v-for="student in studentsInGrade" class="col-md-4">
+								<label>{{student.last_name}}, {{student.first_name}}</label>
+								<button class="btn btn-primary" @click="addStudentToCourse(student)">Add Student</button>
+							</div>
+							<button class="btn btn-primary" @click="addStudents=false">Done</button>
+						</div>
+					</div>
+				</div>
+				<div class="x_panel">
 					<div class="x_content">
 						<div class="row">
 							<div class="col-xs-10">
@@ -79,6 +94,7 @@
 										<button v-if="deposit.absent" :disabled="deposit.iss" class="btn btn-success" @click="deposit.absent=false;markAbsent(deposit.student,false)">Present</button>
 										<button v-if="!deposit.iss" :disabled="deposit.absent" class="btn btn-warning" @click="deposit.iss=true;markIss(deposit.student,true);">ISS</button>
 										<button v-if="deposit.iss" :disabled="deposit.absent" class="btn btn-info" @click="deposit.iss=false;markIss(deposit.student,false);">Undo</button>
+										<button class="btn btn-danger" @click="removeStudent(deposit.student)">Remove from Course</button>
 										<button class='btn btn-info' @click="selectedStudent = deposit.student; studentModal = true">View</button>
 									</td>
 								</tr>
@@ -241,6 +257,7 @@ export default {
 	created: function(){
 		this.fetchGoals();
 		this.fetchReport();
+		this.fetchStudentsByGrade();
 	},
 	mounted: function(){
 		var self = this;
@@ -269,6 +286,7 @@ export default {
 			missingAssignments: {},
 			selectedAssignment: {},
 			showEditAssignmentModal: false,
+			studentsInGrade: [],
 			newAssignment: {
 				name: "",
 				description: "",
@@ -487,6 +505,35 @@ export default {
 					self.report.tthreereport_set[i].iss = iss;
 				}
 			}
+		},
+		removeStudent: function(student){
+			var student_id = student.id;
+			var report_id = report.id;
+			var url = "bank/course_report/remove_student/";
+			var self = this;
+			self.$http.post(url,{student_id:student_id,report_id:report_id})
+			.then(function(response){
+				self.fetchReport();
+			})
+		},
+		addStudentToCourse: function(student){
+			var student_id = student.id;
+			var report_id = report.id;
+			var url = "bank/course_report/add_student/";
+			var self = this;
+			self.$http.post(url,{student_id:student_id,report_id:report_id})
+			.then(function(response){
+				self.fetchreport();
+			})
+		},
+		fetchStudentsByGrade: function(){
+			var grade = report.course.grade;
+			var url = "bank/students/get_by_grade/";
+			var self = this;
+			self.$http.post(url,{grade:grade})
+			.then(function(response){
+				self.studentsInGrade = response.data;
+			})
 		}
 	}
 }
