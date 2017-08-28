@@ -32,6 +32,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Add Students</h2>
+						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<button v-if="addStudents=false" @click="addStudents = true;" class="btn btn-default">Add Students</button>
@@ -287,6 +288,7 @@ export default {
 			selectedAssignment: {},
 			showEditAssignmentModal: false,
 			studentsInGrade: [],
+			addStudents: false,
 			newAssignment: {
 				name: "",
 				description: "",
