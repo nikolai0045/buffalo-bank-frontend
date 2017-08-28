@@ -11,12 +11,16 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<label for="schedule_date">Select Date</label>
-						<input v-model="date" id='schedule_date' type="text" class="form-control datepicker" data-date-format="yy-mm-dd" />
-						<label for="schedule">Select Schedule</label>
-						<select class="custom-select" v-model="selectedSchedule">
-							<option v-for="schedule in schedules" :value="schedule">{{schedule.name}}</option>
-						</select>
+						<div class="form-group">
+							<label for="schedule_date">Select Date</label>
+							<input v-model="date" id='schedule_date' type="text" class="form-control datepicker" data-date-format="yy-mm-dd" />
+						</div>
+						<div class="form-group">
+							<label for="schedule">Select Schedule</label>
+							<select class="custom-select" v-model="selectedSchedule">
+								<option v-for="schedule in schedules" :value="schedule">{{schedule.name}}</option>
+							</select>
+						</div>
 						<button class="btn btn-primary" @click="submit()">Save Changes</button>
 						<div class="clearfix"></div>
 					</div>
@@ -54,10 +58,26 @@ export default {
 		this.getSchedules();
 		this.getScheduleByDate();
 	},
+	mounted: function(){
+		var self = this;
+		$('.datepicker').each(function() {
+			$(this).daterangepicker(
+				{
+					locale: {
+						format: 'YYYY-MM-DD',
+					},
+					singleDatePicker: true
+				}
+			).on('apply.daterangepicker', function(ev, picker) {
+				self.date = $(this).val();
+			});
+		});
+	},
 	watch: {
 		date: function(){
 			this.getScheduleByDate();
-		}	
+			self.message = null;
+		}
 	},
 	methods: {
 		getScheduleByDate: function(){
@@ -87,15 +107,23 @@ export default {
 		},
 		submit: function(){
 			var self = this;
-			var url = "/bank/schedule/daily_schedule/"+self.scheduleId+'/';
 			var dailySchedule = {
 				date: self.date,
 				schedule: self.selectedSchedule
 			}
-			self.$http.put(url,data)
-			.then(function(response){
-				self.message = "Schedule was saved successfully";
-			})
+			if (self.scheduleId){
+				var url = "/bank/schedule/daily_schedule/"+self.scheduleId+'/';
+				self.$http.put(url,dailySchedule)
+				.then(function(response){
+					self.message = "Schedule was saved successfully";
+				})
+			} else {
+				var url = "/bank/schedule/daily_schedules/";
+				self.$http.post(url,dailySchedule)
+				.then(function(response){
+					self.message = "Schedule was saved successfully";
+				});
+			}
 		}
 	}
 }
