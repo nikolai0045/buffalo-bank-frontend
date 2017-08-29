@@ -2,7 +2,7 @@
 	<div class='right_col' role='main'>
 		<div class='row'>
 			<div class='col-md-12 col-sm-12 col-xs-12'>
-				<div class='x_panel'>
+				<!-- <div class='x_panel'>
 					<div class='x_title'>
 						<h2>Students by Grade</h2>
 						<div class="clearfix"></div>
@@ -13,7 +13,7 @@
 						<router-link class="btn btn-primary" :to="{name: 'students_by_grade', params: {grade: '8'}}">8th Grade</router-link>
 						<div class="clearfix"></div>
 					</div>
-				</div>
+				</div> -->
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Students by Mentoring Group</h2>
@@ -40,7 +40,7 @@
 										{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group
 									</router-link>
 								</tr>
-							</table>	
+							</table>
 						</div>
 						<div class="col-md-4">
 							<h4>8th Grade</h4>
@@ -51,7 +51,7 @@
 										{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group
 									</router-link>
 								</tr>
-							</table>	
+							</table>
 						</div>
 					</div>
 				</div>
@@ -87,7 +87,7 @@ export default {
 			.then(function(response){
 				self.sixthGradeMentoring = response.data;
 			});
-			
+
 			self.$http.post(url,{
 				active: true,
 				grade: "7",
@@ -103,7 +103,7 @@ export default {
 				hour: "Mentoring"
 			})
 			.then(function(response){
-				self.eighthGradeMentoring = response.data;  
+				self.eighthGradeMentoring = response.data;
 			});
 		}
 	}
