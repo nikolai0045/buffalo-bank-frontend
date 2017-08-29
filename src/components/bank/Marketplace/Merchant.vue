@@ -27,7 +27,14 @@
 					<div class="x_title">
 						<h2>Step 3 <small>Select students and items</small></h2>
 						<div class="clearfix"></div>
+					</div>
 						<div class="x_content">
+							<div class="col-md-12">
+								<button class="btn btn-default" @click="clearTransaction()">Clear</button>
+								<button class="btn btn-success" @click="submitTransaction()">Submit Transaction</button>
+							</div>
+							<div class="clearfix"></div>
+							<hr>
 							<div class="col-md-6" style="width:50%;">
 								<h4>Select Students</h4>
 								<input type="text" v-model="studentSearchTerm" placeholder="Search..." />
@@ -74,14 +81,10 @@
 										</template>
 									</tbody>
 								</table>
-								<hr>
 								<h4>Transaction Total: ${{transactionTotal}}</h4>
 							</div>
 							<div class="clearfix"></div>
 							<hr>
-							<button class="btn btn-default" @click="clearTransaction()">Clear</button>
-							<button class="btn btn-success" @click="submitTransaction()">Submit Transaction</button>
-							<div class="clearfix"></div>
 						</div>
 					</div>
 				</div>
@@ -108,7 +111,7 @@ export default {
 		}
 	},
 	created: function(){
-		this.fetchPurchaseItems();	
+		this.fetchPurchaseItems();
 	},
 	methods: {
 		fetchPurchaseItems: function(){
