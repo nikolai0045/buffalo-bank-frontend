@@ -69,7 +69,7 @@ export default {
 		},
 		fetchGoals: function(){
 			var self = this;
-			var url = "bank/behavior_goals/active";
+			var url = "bank/behavior_goals/active/";
 			self.$http.get(url)
 			.then(function(response){
 				self.goals = response.data;

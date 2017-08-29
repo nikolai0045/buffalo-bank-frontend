@@ -30,6 +30,7 @@
 						<div class="x_content">
 							<div class="col-md-6" style="width:50%;">
 								<h4>Select Students</h4>
+								<input type="text" v-model="studentSearchTerm" placeholder="Search..." />
 								<table class="table table-condensed">
 									<thead>
 										<th></th>
@@ -37,13 +38,15 @@
 										<th>Account Balance</th>
 									</thead>
 									<tbody>
-										<tr v-for="student in eligibleStudents">
-											<td>
-												<input class="form-check-input" :disabled="student.account_balance < transactionTotal && selectedStudents.indexOf(student) < 0" type="checkbox" :value="student" v-model="selectedStudents">
-											</td>
-											<td>{{student.last_name}}, {{student.first_name}}</td>
-											<td>${{student.account_balance}}</td>
-										</tr>
+										<template v-for="student in eligibleStudents">
+											<tr v-if="studentSearchTerm == '' || student.last_name.toLowerCase().indexOf(studentSearchTerm.toLowerCase())>-1 || student.first_name.toLowerCase().indexOf(studentSearchTerm)>-1">
+												<td>
+													<input class="form-check-input" :disabled="student.account_balance < transactionTotal && selectedStudents.indexOf(student) < 0" type="checkbox" :value="student" v-model="selectedStudents">
+												</td>
+												<td>{{student.last_name}}, {{student.first_name}}</td>
+												<td>${{student.account_balance}}</td>
+											</tr>
+										</template>
 									</tbody>
 								</table>
 								<hr>
@@ -52,6 +55,7 @@
 							</div>
 							<div class="col-md-6" style="width:50%;">
 								<h4>Select Items</h4>
+								<input type="text" v-model="searchTerm" placeholder="Search..."/>
 								<table class="table table-condensed">
 									<thead>
 										<th></th>
@@ -60,12 +64,14 @@
 										<th>Quantity</th>
 									</thead>
 									<tbody>
-										<tr v-for="item in purchaseItems">
-											<td><input class="form-check-input" :disabled="transactionTotal+item.current_price > lowestBalance && selectedItems.indexOf(item)<0" type="checkbox" :value="item" v-model="selectedItems"></td>
-											<td>{{item.name}}</td>
-											<td>{{item.current_price}}</td>
-											<td>{{item.quantity_remaining}}</td>
-										</tr>	
+										<template v-for="item in purchaseItems">
+											<tr v-if="searchTerm == '' || item.name.toLowerCase().indexOf(searchTerm.toLowerCase())>-1">
+												<td><input class="form-check-input" :disabled="transactionTotal+item.current_price > lowestBalance && selectedItems.indexOf(item)<0" type="checkbox" :value="item" v-model="selectedItems"></td>
+												<td>{{item.name}}</td>
+												<td>{{item.current_price}}</td>
+												<td>{{item.quantity_remaining}}</td>
+											</tr>
+										</template>
 									</tbody>
 								</table>
 								<hr>
@@ -96,7 +102,9 @@ export default {
 			eligibleStudents: [],
 			ineligibleStudents: [],
 			selectedStudents: [],
-			selectedItems: []
+			selectedItems: [],
+			searchTerm: '',
+			studentSearchTerm: ''
 		}
 	},
 	created: function(){

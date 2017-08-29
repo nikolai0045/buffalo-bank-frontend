@@ -8,9 +8,9 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class='x_content'>
-						<router-link class="btn btn-primary" to="{name: 'students_by_grade', params: {grade: '6'}}">6th Grade</router-link>
-						<router-link class="btn btn-primary" to="{name: 'students_by_grade', params: {grade: '7'}}">7th Grade</router-link>
-						<router-link class="btn btn-primary" to="{name: 'students_by_grade', params: {grade: '8'}}">8th Grade</router-link>
+						<router-link class="btn btn-primary" :to="{name: 'students_by_grade', params: {grade: '6'}}">6th Grade</router-link>
+						<router-link class="btn btn-primary" :to="{name: 'students_by_grade', params: {grade: '7'}}">7th Grade</router-link>
+						<router-link class="btn btn-primary" :to="{name: 'students_by_grade', params: {grade: '8'}}">8th Grade</router-link>
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -25,7 +25,9 @@
 							<hr>
 							<table class="table table-condensed">
 								<tr v-for="mentoring in sixthGradeMentoring">
-									<td>{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group</td>
+									<router-link class="text-primary" :to="{name: 'course_roster',params: {course_id: mentoring.id}}">
+										{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group
+									</router-link>
 								</tr>
 							</table>
 						</div>
@@ -33,8 +35,10 @@
 							<h4>7th Grade</h4>
 							<hr>
 							<table class="table table-condensed">
-								<tr v-for="homeroom in seventhGradeMentoring">
-									<td>{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group</td>
+								<tr v-for="mentoring in seventhGradeMentoring">
+									<router-link class="text-primary" :to="{name: 'course_roster',params: {course_id: mentoring.id}}">
+										{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group
+									</router-link>
 								</tr>
 							</table>	
 						</div>
@@ -42,8 +46,10 @@
 							<h4>8th Grade</h4>
 							<hr>
 							<table class="table table-condensed">
-								<tr v-for="homeroom in eighthGradeMentoring">
-									<td>{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group</td>
+								<tr v-for="mentoring in eighthGradeMentoring">
+									<router-link class="text-primary" :to="{name: 'course_roster',params: {course_id: mentoring.id}}">
+										{{mentoring.teachers[0].first_name}} {{mentoring.teachers[0].last_name}}'s Mentoring Group
+									</router-link>
 								</tr>
 							</table>	
 						</div>
@@ -65,26 +71,37 @@ export default {
 			eighthGradeMentoring: []
 		}
 	},
+	created: function(){
+		this.fetchMentoringGroups()
+	},
 	methods: {
 		fetchMentoringGroups: function(){
 			var self = this;
-			var searchTerms = {
-				active: true,
-				grade: '6',
-				hour: 'Mentoring'
-			}
+
 			var url = '/courses/search/'
-			self.$http.post(url,searchTerms)
+			self.$http.post(url,{
+				active: true,
+				grade: "6",
+				hour: "Mentoring"
+			})
 			.then(function(response){
 				self.sixthGradeMentoring = response.data;
 			});
-			searchTerms.grade = '7';
-			self.$http.post(url,searchTerms)
+			
+			self.$http.post(url,{
+				active: true,
+				grade: "7",
+				hour: "Mentoring"
+			})
 			.then(function(response){
 				self.seventhGradeMentoring = response.data;
 			});
-			searchTerms.grade = '8';
-			self.$http.post(url,searchTerms)
+
+			self.$http.post(url,{
+				active: true,
+				grade: "8",
+				hour: "Mentoring"
+			})
 			.then(function(response){
 				self.eighthGradeMentoring = response.data;  
 			});

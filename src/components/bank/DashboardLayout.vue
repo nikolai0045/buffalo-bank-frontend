@@ -23,11 +23,9 @@
 								<li v-if="user.administrator" :class="{'active':$route.fullPath === '/admin'}">
 									<router-link to="/admin"><i class="fa fa-dashboard"></i>Admin</router-link>
 								</li>
-<!--
 								<li :class="{'active': $route.fullPath === '/students'}">
 									<router-link :to="{ name: 'students'}"><i class="fa fa-users"></i>Students</router-link>
 								</li>
--->
 								<li>
 									<a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeYIOx3I1ulMeyQEvDZj3B9wahb6Q0wC8d4eOdvjVqIamhrdQ/viewform?usp=sf_link"><i class="fa fa-exclamation-triangle"></i>Report an Issue</a>
 								</li>

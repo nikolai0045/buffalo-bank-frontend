@@ -1,15 +1,13 @@
 <template>
 	<div class="x_panel pass_panel" v-if="loaded">
 		<div class="x_title">
-			<div class="col-md-6">
-				<h2>PASS <small>Recent reports for {{student.first_name}} {{student.last_name}}</small></h2>
-			</div>
+			<h2>PASS <small>Recent reports for {{student.first_name}} {{student.last_name}}</small></h2>
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
 			<div class="col-md-6 pull-right">
 				<label>Select Date</label>
-				<input v-model="date" id='schedule_date' type="text" class="form-control datepicker" data-date-format="yy-mm-dd" />
+				<input v-model="date" type="date" class="form-control" />
 			</div>
 			<h4>Goals</h4>
 			<ul v-if="goals.length > 0">
@@ -115,22 +113,6 @@ export default {
 		}
 		var date = year + '-' + month + '-' + day;
 		this.date = date;
-	},
-	mounted: function(){
-		var self = this;
-		$('.datepicker').daterangepicker();
-		$('.datepicker').each(function() {
-			$(this).daterangepicker(
-				{
-					locale: {
-						format: 'YYYY-MM-DD',
-					},
-					singleDatePicker: true
-				}
-			).on('apply.daterangepicker', function(ev, picker) {
-				self.date = $(this).val();
-			});
-		});
 	},
 	watch: {
 		date: function(newVal){
