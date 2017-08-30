@@ -16,6 +16,7 @@ import StudentsComponent from '../components/bank/Students.vue'
 import AdminPanelComponent from '../components/admin/AdminPanel.vue'
 import ManageDailySchedulesComponents from '../components/admin/AdminPanel/ManageDailySchedules.vue'
 import ScheduleBuilderComponent from '../components/admin/AdminPanel/ScheduleBuilder.vue'
+import StudentsByGradeComponent from '../components/bank/Students/ByGrade.vue'
 import $ from 'jquery'
 
 
@@ -186,6 +187,17 @@ const router = new Router({
 					},
 					components: {
 						content: ScheduleBuilderComponent
+					}
+				},
+				{
+					name: 'students_by_grade',
+					path: 'admin/students/:grade/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Grade List'
+					},
+					components: {
+						content: StudentsByGradeComponent
 					}
 				}
 			]
