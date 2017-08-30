@@ -8,43 +8,51 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class='x_content'>
-						<div class="col-sm-3">
-							<ul class="pagination">
-								<li class="page-item">
-									<a class="page-link" style="width:100%;" :disabled="index==0" @click="index-=25;">Previous</a>
-								</li>
-							</ul>
+						<div class="col-md-8">
+							<table class="table table-condensed">
+								<thead>
+									<th>Last Name</th>
+									<th>First Name</th>
+									<th>Account Balance</th>
+									<th></th>
+								</thead>
+								<tbody v-if="searchTerm==''">
+									<template v-for="student in students.slice(index,index+25)">
+										<tr v-if="searchTerm == '' || student.first_name.indexOf(searchTerm)!=-1 || student.last_name.indexOf(searchTerm)>-1">
+											<td style="text-align:left;">{{student.last_name}}</td>
+											<td style="text-align:left;">{{student.first_name}}</td>
+											<td style="text-align:left;">{{student.account_balance}}</td>
+											<td style="text-align:left;"><router-link :to="{name:'student_profile', params: {student_id:student.id}}">Profile</router-link></td>
+										</tr>
+									</template>
+								</tbody>
+								<tbody v-else>
+									<template v-for="student in students">
+										<tr v-if="searchTerm == '' || student.first_name.indexOf(searchTerm)!=-1 || student.last_name.indexOf(searchTerm)>-1">
+											<td style="text-align:left;">{{student.last_name}}</td>
+											<td style="text-align:left;">{{student.first_name}}</td>
+											<td style="text-align:left;">{{student.account_balance}}</td>
+											<td style="text-align:left;"><router-link :to="{name:'student_profile', params: {student_id:student.id}}">Profile</router-link></td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
 						</div>
-						<div class="col-sm-6">
+						<div class="col-md-4">
+							<nav>
+								<ul class="pagination">
+									<li class="page-item">
+										<a class="page-link" :disabled="index==0" @click="index-=25;">Previous Page</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" :disabled="index+25 < students.length" @click="index+=25">Next Page</a>
+									</li>
+								</ul>
+							</nav>
+							<input class="form-control" v-model="searchTerm" placeholder="Search..." />
+
+							<div class="clearfix"></div>
 						</div>
-						<div class="col-sm-3">
-							<ul class="pagination">
-								<li class="page-item">
-									<a class="page-link" style="width:100%;" :disabled="index+25 < students.length" @click="index+=25">Next</a>
-								</li>
-							</ul>
-						</div>
-						<div class="clearfix"></div>
-						<hr>
-						<input class="form-control" v-model="searchTerm" placeholder="Search..." />
-						<table class="table table-condensed">
-							<thead>
-								<th>Last Name</th>
-								<th>First Name</th>
-								<th>Account Balance</th>
-								<th></th>
-							</thead>
-							<tbody>
-								<template v-for="student in students.slice(index,index+25)">
-									<tr v-if="searchTerm == '' || student.first_name.indexOf(searchTerm)>-1 || student.last_name.indexOf(searchTerm)>-1">
-										<td>{{student.last_name}}</td>
-										<td>{{student.first_name}}</td>
-										<td>{{student.account_balance}}</td>
-										<td><router-link :to="{name:'student_profile', params: {student_id:student.id}}">Profile</router-link></td>
-									</tr>
-								</template>
-							</tbody>
-						</table>
 						<div class="clearfix"></div>
 					</div>
 				</div>
