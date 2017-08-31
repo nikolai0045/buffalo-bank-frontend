@@ -18,7 +18,7 @@
 								</thead>
 								<tbody v-if="searchTerm==''">
 									<template v-for="student in students.slice(index,index+25)">
-										<tr v-if="searchTerm == '' || student.first_name.indexOf(searchTerm)!=-1 || student.last_name.indexOf(searchTerm)>-1">
+										<tr v-if="searchTerm == '' || student.first_name.toLowerCase().indexOf(searchTerm.toLowerCase())!=-1 || student.last_name.toLowerCase().indexOf(searchTerm.toLowerCase())>-1">
 											<td style="text-align:left;">{{student.last_name}}</td>
 											<td style="text-align:left;">{{student.first_name}}</td>
 											<td style="text-align:left;">{{student.account_balance}}</td>
@@ -28,7 +28,7 @@
 								</tbody>
 								<tbody v-else>
 									<template v-for="student in students">
-										<tr v-if="searchTerm == '' || student.first_name.indexOf(searchTerm)!=-1 || student.last_name.indexOf(searchTerm)>-1">
+										<tr v-if="searchTerm == '' || student.first_name.toLowerCase().indexOf(searchTerm.toLowerCase())!=-1 || student.last_name.toLowerCase().indexOf(searchTerm.toLowerCase())>-1">
 											<td style="text-align:left;">{{student.last_name}}</td>
 											<td style="text-align:left;">{{student.first_name}}</td>
 											<td style="text-align:left;">{{student.account_balance}}</td>
