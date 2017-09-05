@@ -14,7 +14,7 @@
 				<div v-if="mentee">
 					<p><b>Mentoring Goals <i class="fa fa-plus-circle" @click.prevent="initGoal()"></i></b></p>
 					<ul v-if="goals.length > 0">
-						<li v-for="g in goals">{{g.name}} <i class="fa fa-pencil-square-o" @click="setSelectedGoal(g);"></i></li>
+						<li v-for="g in goals">{{g.name}} - {{g.description}}<i class="fa fa-pencil-square-o" @click="setSelectedGoal(g);"></i></li>
 					</ul>
 					<ul v-else>
 						<li>Currently no goals</li>
@@ -23,7 +23,7 @@
 				<div v-else>
 					<p><b>Goals</b></p>
 					<ul v-if="goals.length > 0">
-						<li v-for="g in goals">{{g.name}}</li>
+						<li v-for="g in goals">{{g.name}} - {{g.description}}</li>
 					</ul>
 					<ul v-else>
 						<li>Currently no goals</li>

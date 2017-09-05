@@ -8,7 +8,6 @@
 		<div class="x_content">
 			<table class="table table-condensed">
 				<thead>
-					<th>Date</th>
 					<th>Course</th>
 					<th>Teacher(s)</th>
 					<th v-for="goal in goals">{{goal.goal}}</th>
@@ -16,7 +15,6 @@
 				</thead>
 				<tbody>
 					<tr v-for="deposit in deposits">
-						<td style="text-align:left;">{{deposit.course_report.date}}</td>
 						<td style="text-align:left;">{{deposit.course_report.course.name}}</td>
 						<td style="text-align:left;"><p v-for="teacher in deposit.course_report.course.teachers">{{teacher.first_name}} {{teacher.last_name}}</p></td>
 						<td v-for="buck in deposit.buck_set"><i v-if="buck.earned" class="fa fa-check" aria-hidden="true"></i><i v-if="!buck.earned" class="fa fa-times" aria-hidden="true"></i></td>
@@ -56,16 +54,16 @@ export default {
 		this.fetchDeposits();
 	},
 	watch: {
-		date: function(){
-			this.fetchDeposits()
+		date: function(newVal){
+			this.fetchDeposits();
 		}
 	},
 	methods: {
 		fetchDeposits: function(){
 			var self = this;
 			var data = {
-				student_id:self.student.id,
-				date:self.date
+				student_id:this.student.id,
+				date:this.date
 			}
 			var url = '/bank/student/daily_deposits/';
 			self.$http.post(url,data)
