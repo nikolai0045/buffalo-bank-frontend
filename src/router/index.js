@@ -17,6 +17,7 @@ import AdminPanelComponent from '../components/admin/AdminPanel.vue'
 import ManageDailySchedulesComponents from '../components/admin/AdminPanel/ManageDailySchedules.vue'
 import ScheduleBuilderComponent from '../components/admin/AdminPanel/ScheduleBuilder.vue'
 import StudentsByGradeComponent from '../components/bank/Students/ByGrade.vue'
+import PrintMarketplaceComponent from '../components/bank/Marketplace/PrintMarketPlace.vue'
 import $ from 'jquery'
 
 
@@ -201,6 +202,15 @@ const router = new Router({
 					}
 				}
 			]
+		},
+		{
+			path: '/marketplace/print/',
+			component: PrintMarketplaceComponent,
+			name: "print_marketplace",
+			meta: {
+				title: 'Buffalo Bank | Print Market',
+				bodyClass: 'login'
+			}
 		}
 	]
 })

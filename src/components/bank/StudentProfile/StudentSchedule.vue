@@ -7,17 +7,17 @@
 		<div class="x_content">
 			<table class="table table-condensed">
 				<thead>
+					<th>Hour</th>
 					<th>Course</th>
-					<th>Teacher(s)</th>
 					<th>Start Time</th>
 					<th>End Time</th>
 				</thead>
 				<tbody>
-					<tr v-for="report in schedule">
-						<td style="text-align:left;">{{report.course.name}}</td>
-						<td style="text-align:left;"><p v-for="t in report.course.teachers">{{t.first_name}} {{t.last_name}}</p></td>
-						<td style="text-align:left;">{{report.start_time}}</td>
-						<td style="text-align:left;">{{report.end_time}}</td>
+					<tr v-for="block in schedule">
+						<td style="text-align:left;">{{block.hour}}</td>
+						<td style="text-align:left;"><p v-for="c in block.courses">{{c.course.name}} <i style="cursor:pointer;" @click="removeStudentFromCourse(c.id)" class="fa fa-times" data-toggle="tooltip" title="Remove student from this course"></i></p></td>
+						<td style="text-align:left;">{{block.start_time}}</td>
+						<td style="text-align:left;">{{block.end_time}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -32,16 +32,44 @@ export default {
 	props: ['student'],
 	data: function(){
 		return {
-			schedule: []
+			schedule: [],
+			date: null
 		}
 	},
 	created: function(){
-		var self = this;
-		var url = '/bank/student/schedule/'+self.student.id+'/';
-		self.$http.get(url)
-		.then(function(response){
-			self.schedule = response.data;
-		})
+		this.date = new Date();
+		this.fetchSchedule();
+	},
+	computed: {
+		cleanedDate: function(){
+			return this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + this.date.getDate();
+		}
+	},
+	methods: {
+		fetchSchedule: function(){
+			var self = this;
+			var url = '/bank/student/daily_schedule/';
+			var data = {
+				student_id: self.student.id,
+				date: self.cleanedDate
+			}
+			self.$http.post(url,data)
+			.then(function(response){
+				self.schedule = response.data;
+			})
+		},
+		removeStudentFromCourse: function(reportId){
+			var self = this;
+			var url = "bank/course_report/remove_student/"
+			var data = {
+				student_id: self.student.id,
+				report_id: reportId
+			}
+			self.$http.post(url,data)
+			.then(function(response){
+				self.fetchSchedule();
+			})
+		}
 	}
 }
 </script>

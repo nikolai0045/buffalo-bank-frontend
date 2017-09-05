@@ -1,6 +1,7 @@
 <template>
 	<div class="x_panel">
 		<div class="x_title">
+			<input class="pull-right" type="date" v-model="date" />
 			<h2>Deposits <small>Recent deposits for {{student.first_name}} {{student.last_name}}</small></h2>
 			<div class="clearfix"></div>
 		</div>
@@ -23,22 +24,6 @@
 					</tr>
 				</tbody>
 			</table>
-			<hr>
-			<h4>Notes</h4>
-			<table class="table table-condensed">
-				<thead>
-					<th>Date</th>
-					<th>Course</th>
-					<th>Note</th>
-				</thead>
-				<template v-for="deposit in deposits">
-						<tr v-if="deposit.note && deposit.note != ''">
-							<td>{{deposit.report.date}}</td>
-							<td>{{deposit.report.course.name}}</td>
-							<td>{{deposit.note}}</td>
-						</tr>
-				</template>
-			</table>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -51,18 +36,39 @@ export default {
 	data: function(){
 		return {
 			deposits: [],
-			goals: []
+			goals: [],
+			date: null
 		}
 	},
 	created: function(){
+		var raw_date = new Date();
+		var year = raw_date.getFullYear();
+		var month = raw_date.getMonth()+1;
+		if (month<10){
+			month = "0"+month;
+		}
+		var day = raw_date.getDate();
+		if (day<10){
+			day = "0"+day;
+		}
+		this.date = year + "-" + month + "-" + day;
 		this.fetchGoals();
 		this.fetchDeposits();
+	},
+	watch: {
+		date: function(){
+			this.fetchDeposits()
+		}
 	},
 	methods: {
 		fetchDeposits: function(){
 			var self = this;
-			var url = '/bank/student/recent_deposits/'+self.student.id+'/';
-			self.$http.get(url)
+			var data = {
+				student_id:self.student.id,
+				date:self.date
+			}
+			var url = '/bank/student/daily_deposits/';
+			self.$http.post(url,data)
 			.then(function(response){
 				self.deposits = response.data;
 			});
