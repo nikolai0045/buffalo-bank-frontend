@@ -27,7 +27,7 @@
 									<router-link :to="{ name: 'students'}"><i class="fa fa-users"></i>Students</router-link>
 								</li>
 								<li>
-									<a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeYIOx3I1ulMeyQEvDZj3B9wahb6Q0wC8d4eOdvjVqIamhrdQ/viewform?usp=sf_link"><i class="fa fa-exclamation-triangle"></i>Report an Issue</a>
+									<a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeXbT9Gc0FC-Nr9HnSyUJRYcOPI6rQmwuUmH8FuYPG7mPMEWg/viewform?usp=sf_link"><i class="fa fa-exclamation-triangle"></i>Report an Issue</a>
 								</li>
 							</ul>
 						</div>
