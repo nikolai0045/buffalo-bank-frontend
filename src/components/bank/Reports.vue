@@ -2,6 +2,10 @@
   <div class='right_col' role='main'>
     <div class='row'>
       <div class='col-md-12 col-sm-12 col-xs-12'>
+        <div class = 'alert alert-warning'>
+          <p>Notice: I recently lost access to the old issue report form. There is a new one in its place now, but any issues previously reported that have not yet been addressed need to be re-submitted. So sorry for the inconvenience. I will get to your issues as soon as possible.</p>
+          <p>Notice: Adding a student to a course on the reports page will now add the student to the official roster, so they will remain on reports in subsequent days.</p>
+        </div>
         <div class='x_panel'>
           <div class="x_title">
             <h2>Reports <small>All of today's reports</small></h2>
