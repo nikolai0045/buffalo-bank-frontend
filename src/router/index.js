@@ -18,6 +18,7 @@ import ManageDailySchedulesComponents from '../components/admin/AdminPanel/Manag
 import ScheduleBuilderComponent from '../components/admin/AdminPanel/ScheduleBuilder.vue'
 import StudentsByGradeComponent from '../components/bank/Students/ByGrade.vue'
 import PrintMarketplaceComponent from '../components/bank/Marketplace/PrintMarketPlace.vue'
+import RecentPurchasesComponent from '../components/bank/Marketplace/RecentPurchases.vue'
 import $ from 'jquery'
 
 
@@ -133,6 +134,17 @@ const router = new Router({
 					},
 					components: {
 						content: MerchantComponent
+					}
+				},
+				{
+					name: 'recent_purchases',
+					path: 'marketplace/recent_purchases/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Recent Purchases'
+					},
+					components: {
+						content: RecentPurchasesComponent
 					}
 				},
 				{

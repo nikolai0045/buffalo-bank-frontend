@@ -12,6 +12,7 @@
 		</div>
 		<div class='col-xs-12'>
 			<router-link class="btn btn-primary" :to="{name: 'print_marketplace'}" target="_blank">View Printable Version</router-link>
+			<router-link class="btn btn-primary" :to="{name: 'recent_purchases'}">View Recent Purchases by Grade</router-link>
 		</div>
 		<div class="col-sm-6" v-for="item in purchaseItems">
 			<div class="x_panel">
