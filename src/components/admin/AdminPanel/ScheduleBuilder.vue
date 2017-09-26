@@ -54,7 +54,8 @@
 							<table class="table table-condensed">
 								<thead>
 									<th>Name</th>
-									<th>Section Number</th>
+									<th>Course #</th>
+									<th>Section #</th>
 									<th>Hour</th>
 									<th>Teacher(s)</th>
 									<th></th>
@@ -62,6 +63,7 @@
 								<tbody>
 									<tr v-for="course in courses.slice(courseIndex,courseIndex+10)">
 										<td>{{course.name}}</td>
+										<td>{{course.course_number}}</td>
 										<td>{{course.section_number}}</td>
 										<td>{{course.hour}}</td>
 										<td><p v-for="teacher in course.teachers">{{teacher.last_name}}, {{teacher.first_name}}</p></td>
