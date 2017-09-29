@@ -2,13 +2,6 @@
   <div class='right_col' role='main'>
     <div class='row'>
       <div class='col-md-12 col-sm-12 col-xs-12'>
-        <div class = 'alert alert-warning'>
-          <p style="color:black;"><b>Notice:</b> I recently lost access to the old issue report form. There is a new one in its place now, but any issues previously reported that have not yet been addressed need to be re-submitted. So sorry for the inconvenience. I will get to your issues as soon as possible.</p>
-          <p style="color:black;"><b>Notice:</b> Adding a student to a course on the reports page will now add the student to the official roster, so they will remain on reports in subsequent days.</p>
-          <p style="color:black;">
-            <b>Notice:</b> I've added a screen for you to be able to see recent purchases by grade level. If you click on "Market", then on "View Recent Purchases by Grade", you'll be able to see these transactions.
-          </p>
-        </div>
         <div class='x_panel'>
           <div class="x_title">
             <h2>Reports <small>All of today's reports</small></h2>
