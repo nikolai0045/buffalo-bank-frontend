@@ -2,7 +2,7 @@
   <div class='right_col' role='main'>
     <div class='row'>
       <div class='col-md-12 col-sm-12 col-xs-12'>
-        <div class="alert alert-warning">
+        <div class="alert alert-warning" style='text-color:black;'>
           <b>Notice:</b> With the start of the new term, schedules will be a little messy for the next couple of days. It is likely that you have a number of reports showing up for you that should not be showing up this term. For anything like this, just submit an issue report. I will be especially attentive to these reports for the next few days to make sure we get schedules solidified.
         </div>
         <div class='x_panel'>
