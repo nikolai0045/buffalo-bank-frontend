@@ -3,11 +3,11 @@
     <div class='row'>
       <div class='col-md-12 col-sm-12 col-xs-12'>
         <div class='x_panel'>
+              <div class="alert alert-warning">
+              <p style="color:black;">Notice: If you have any courses showing up that should not show up for you this term, please submit an issue report detailing which courses need to be removed for the current term. The same applies for any courses that need to be removed from certain days of the week. If you get those requests in today (11/8), I will have your schedule fixed for Thursday.</p>
+            </div>
           <div class="x_title">
             <h2>Reports <small>All of today's reports</small></h2>
-            <div class="alert alert-warning">
-              <p>Notice: If you have any courses showing up that should not show up for you this term, please submit an issue report detailing which courses need to be removed for the current term. The same applies for any courses that need to be removed from certain days of the week. If you get those requests in today (11/8), I will have your schedule fixed for Thursday.</p>
-            </div>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
