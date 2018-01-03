@@ -36,7 +36,7 @@ export default {
 		}
 	},
 	created: function(){
-		self.fetchPercentages();
+		this.fetchPercentages();
 	},
 	methods: {
 		fetchPercentages: function(){
