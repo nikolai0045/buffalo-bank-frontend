@@ -19,6 +19,7 @@ import ScheduleBuilderComponent from '../components/admin/AdminPanel/ScheduleBui
 import StudentsByGradeComponent from '../components/bank/Students/ByGrade.vue'
 import PrintMarketplaceComponent from '../components/bank/Marketplace/PrintMarketPlace.vue'
 import RecentPurchasesComponent from '../components/bank/Marketplace/RecentPurchases.vue'
+import TeacherCompletionPercentagesComponent from '../components/bank/Teachers/CompletionPercentages.vue'
 import $ from 'jquery'
 
 
@@ -211,6 +212,17 @@ const router = new Router({
 					},
 					components: {
 						content: StudentsByGradeComponent
+					}
+				},
+				{
+					name: 'completion_rates_by_teacher',
+					path: 'admin/teachers/completion_rates/',
+					meta: {
+						bodyClass: 'dashboard',
+						title: 'Buffalo Bank | Completion Percentages'
+					},
+					components: {
+						content: TeacherCompletionPercentagesComponent
 					}
 				}
 			]
