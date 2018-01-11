@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+require('es6-promise').polyfill();
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
 import VuePaginate from 'vue-paginate'
